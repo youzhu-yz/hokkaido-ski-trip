@@ -758,6 +758,8 @@ ul.dots li.lab::before{top:50%;transform:translateY(-50%)}  /* 圆点跟随字�
 .ttime.sw::after{content:"⇄";display:block;font-size:9px;line-height:1;color:var(--accent);
   opacity:.55;margin-top:1px}
 .ttime.sw:active{color:var(--accent-deep)}
+.ttime.sw.alt{color:#c79100}   /* 非默认班次(第2班以外)的时间标黄 */
+.dark .ttime.sw.alt{color:#e2b83f}
 .hcard.is-clamp .dots{max-height:72px;overflow:hidden;
   -webkit-mask-image:linear-gradient(180deg,#000 80%,transparent);
   mask-image:linear-gradient(180deg,#000 80%,transparent);
@@ -1595,7 +1597,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 
 <footer>
   <div>❄️ <b>YOTTA GAMES
-外滑小分队</b> · v0.171 分享版</div>
+外滑小分队</b> · v0.172 分享版</div>
   
 </footer>
 
@@ -1768,6 +1770,12 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
         el.textContent = opts[Math.max(0, Math.min(idx, opts.length - 1))];
       });
     }
+    var defIdx = link ? (link.def || 1) - 1 : 0;   // 默认班(第2个)之外的时刻 → 时间标黄提示非默认班次
+    function applyIdx(gi, idx){
+      var rows = rowsOf(gi);
+      setRows(rows, idx);
+      rows.forEach(function(el){ el.classList.toggle('alt', idx !== defIdx); });
+    }
     function applyFollow(){
       if(!link || !link.follow) return;
       link.follow.forEach(function(f){
@@ -1819,10 +1827,10 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
         var opts = rows[0].getAttribute('data-opts').split('|');
         var cur = opts.indexOf(rows[0].textContent.trim());
         var next = (cur + 1) % opts.length;
-        setRows(rows, next);
+        applyIdx(gi, next);
         if(link.cross && gi === 0){
           var to = link.cross[String(next + 1)];
-          if(to !== undefined) setRows(rowsOf(1), +to - 1);
+          if(to !== undefined) applyIdx(1, +to - 1);
         }
         refresh();
       });
@@ -1835,7 +1843,7 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
         if(g === null || seen[g]) return;
         seen[g] = true;
         var opts = cell.getAttribute('data-opts').split('|');
-        setRows(rowsOf(+g), Math.max(0, Math.min((link.def || 1) - 1, opts.length - 1)));
+        applyIdx(+g, Math.max(0, Math.min(defIdx, opts.length - 1)));
       });
     }
     refresh();
