@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>北海道滑雪</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(120% 90% at 50% 0%,#1a2f52 0%,#101d36 46%,#0a1220 100%);
+  font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;overflow:hidden}
+body::before,body::after{content:'';position:fixed;left:-10%;top:-30vh;width:120%;height:60vh;pointer-events:none;
+  background-image:radial-gradient(2px 2px at 12% 30%,rgba(255,255,255,.55) 50%,transparent 51%),
+    radial-gradient(1.6px 1.6px at 34% 70%,rgba(255,255,255,.4) 50%,transparent 51%),
+    radial-gradient(2.4px 2.4px at 58% 20%,rgba(255,255,255,.5) 50%,transparent 51%),
+    radial-gradient(1.4px 1.4px at 76% 60%,rgba(255,255,255,.35) 50%,transparent 51%),
+    radial-gradient(2px 2px at 90% 40%,rgba(255,255,255,.45) 50%,transparent 51%);
+  animation:snow 9s linear infinite}
+body::after{animation-duration:14s;animation-delay:-5s;opacity:.55;transform:scaleX(-1)}
+@keyframes snow{to{transform:translateY(150vh)}}
+@media (prefers-reduced-motion: reduce){body::before,body::after{animation:none}}
+.mtns{position:fixed;left:0;right:0;bottom:0;height:26vh;pointer-events:none;opacity:.55}
+#boot{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:18px;padding:20px;text-align:center}
+.spin{width:30px;height:30px;border-radius:50%;border:3px solid rgba(130,170,230,.18);border-top-color:#6ea8e8;animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#bmsg{min-height:18px;color:#8ba3c7;font-size:13px;letter-spacing:.5px}
+#boot.err .spin{display:none}
+#boot.err #bmsg{color:#eb9c7d;margin-bottom:2px}
+#boot.err::after{content:"点击重试";color:#dce9f8;font-size:14px;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:8px 24px;cursor:pointer}
+</style></head><body>
+<svg class="mtns" viewBox="0 0 480 150" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0,150 L0,96 L64,58 L122,94 L182,46 L244,94 L298,62 L354,102 L426,64 L480,108 L480,150 Z" fill="rgba(120,155,215,.12)"/>
+  <path d="M0,150 L0,112 L48,76 L96,108 L142,34 L192,88 L236,58 L278,98 L326,44 L372,86 L422,60 L480,102 L480,150 Z" fill="rgba(18,30,54,.9)"/>
+</svg>
+<div id="boot"><div class="spin"></div><div id="bmsg">正在打开…</div></div>
+<script>
+var ITER = 21000;   /* 口令已内置本页(密钥不对访问者保密),PBKDF2 只需防撞库级强度;2.1万次≈0.2秒,大幅快于旧21万次 */
+var PW = 'hokkaido';
+var LOADER = '<scr' + 'ipt>(function(){' +
+'var RAW = window.__PK; if(!RAW) return;' +
+'var KEY = crypto.subtle.importKey("raw", RAW, "AES-GCM", false, ["decrypt"]);' +
+'function dec(u8){ return KEY.then(function(k){ return crypto.subtle.decrypt({name:"AES-GCM", iv:u8.slice(3, 15)}, k, u8.slice(15)); }); }' +
+'var blobOf = {}, wait = {}, pending = [];' +
+'function mkTip(el){   /* 下载进度气泡:占位区有尺寸→盖中央;无src占位盒塌陷/小图→悬在元素上方 */' +
+'  var r = el.getBoundingClientRect();' +
+'  var x, y;' +
+'  if(r.width >= 24 && r.height >= 24){' +
+'    x = r.left + window.scrollX + r.width / 2 - 24; y = r.top + window.scrollY + r.height / 2 - 13;' +
+'  }else{' +
+'    x = r.left + window.scrollX; y = r.top + window.scrollY - 26;' +
+'  }' +
+'  var d = document.createElement("div");' +
+'  d.className = "wl-tip";' +
+'  d.style.cssText = "position:absolute;left:" + x + "px;top:" + y + "px;min-width:48px;text-align:center;padding:4px 10px;border-radius:10px;background:rgba(13,23,38,.75);color:#e2edfa;font-size:12px;letter-spacing:1px;z-index:9;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.35)";' +
+'  d.textContent = "0%";' +
+'  document.body.appendChild(d);' +
+'  return d;' +
+'}' +
+'function rmTip(t){ if(t && t.parentNode) t.parentNode.removeChild(t); }' +
+'function loadEl(el, my){' +
+'  var url = el.getAttribute("data-psrc");' +
+'  if(!url){ showInOrder(my, function(){}); return Promise.resolve(); }' +
+'  if(blobOf[url]){ showInOrder(my, function(){ el.src = blobOf[url]; }); return Promise.resolve(); }' +
+'  if(wait[url]){ wait[url].push(el); showInOrder(my, function(){}); return Promise.resolve(); }' +   /* 同图复用:显示并进首图,此处只占位释放序号 */
+'  wait[url] = [el];' +
+'  var tip = mkTip(el);' +
+'  var p = fetch(url + ".b").then(function(r){' +
+'    if(!r.ok) throw 0;' +
+'    var total = +(r.headers.get("content-length") || 0);' +
+'    if(!r.body || !r.body.getReader){ return r.arrayBuffer(); }' +
+'    var rd = r.body.getReader(), chunks = [], got = 0;' +
+'    function pump(){' +
+'      return rd.read().then(function(x){' +
+'        if(x.done){' +
+'          var out = new Uint8Array(got), o = 0;' +
+'          chunks.forEach(function(c){ out.set(c, o); o += c.length; });' +
+'          return out.buffer;' +
+'        }' +
+'        chunks.push(x.value); got += x.value.length;' +
+'        if(tip){ tip.textContent = total ? Math.min(99, Math.round(got / total * 100)) + "%" : ((got / 1024) | 0) + "KB"; }' +
+'        return pump();' +
+'      });' +
+'    }' +
+'    return pump();' +
+'  })' +
+'    .then(function(b){ if(tip) tip.textContent = "解密"; return dec(new Uint8Array(b)); })' +
+'    .then(function(buf){' +
+'      var u = URL.createObjectURL(new Blob([buf]));' +
+'      blobOf[url] = u;' +
+'      showInOrder(my, function(){   /* 上屏严格按页面序:前一张显示了才轮到这张 */' +
+'        wait[url].forEach(function(e){ e.src = u; });' +
+'        wait[url] = null;' +
+'        rmTip(tip);' +
+'      });' +
+'    }).catch(function(){' +
+'      showInOrder(my, function(){ wait[url] = null; rmTip(tip); });' +   /* 失败也占位释放顺序 */
+'    });' +
+'  return p.catch(function(){});' +   /* 下载失败不阻塞并发池 */
+'}' +
+'var MAXDL = 3, active = 0, dq = [], nextSeq = 0, showWait = {}, nextShow = 0;' +
+'function showInOrder(my, fn){   /* 按序号排队上屏:序号到了立即执行(同步),保证视觉顺序=DOM顺序 */' +
+'  if(my === undefined){ fn(); return; }' +
+'  showWait[my] = fn;' +
+'  while(showWait[nextShow]){ var f = showWait[nextShow]; delete showWait[nextShow]; f(); nextShow++; }' +
+'}' +
+'function pumpQ(){   /* 受控并发:同时最多 MAXDL 张在下载,槽位由显示完成释放 */' +
+'  while(active < MAXDL && dq.length){' +
+'    var el = dq.shift(); active++;' +
+'    loadEl(el, el.__seq).then(function(){ active--; pumpQ(); });' +
+'  }' +
+'}' +
+'function enqueue(el){ el.__seq = nextSeq++; dq.push(el); pumpQ(); }' +
+'function poke(){   /* 滚动驱动懒加载:视口±500px 才下载,越靠后越晚;几何判定不依赖渲染帧 */' +
+'  if(!pending.length) return;' +
+'  var vh = window.innerHeight, i, el, r, zero = false, hit = [];' +
+'  for(i = pending.length - 1; i >= 0; i--){' +
+'    el = pending[i]; r = el.getBoundingClientRect();' +
+'    if(r.width === 0 && r.height === 0){ zero = true; continue; }   /* display:none/弹窗动画中:暂缓 */' +
+'    if(r.top < vh + 500 && r.bottom > -500){ pending.splice(i, 1); hit.push(el); }' +
+'  }' +
+'  hit.reverse();' +   /* 倒序收集,正回 DOM 顺序 */
+'  hit.forEach(enqueue);' +
+'  if(zero){ setTimeout(poke, 400); }   /* 还有暂不可见的:定时重探,元素一出现即加载(弹窗内部滚动不冒泡,靠这里补) */' +
+'}' +
+'function reg(el){ pending.push(el); }' +
+'function scanAll(root){' +
+'  if(!root.querySelectorAll) return;' +
+'  var meds = root.querySelectorAll("img[src],video[src],source[src]");' +   /* 整块插入的容器:后代里的明文src也摘掉(innerHTML批量插入时img藏在子容器内) */
+'  for(var j = 0; j < meds.length; j++){' +
+'    var sv2 = meds[j].getAttribute("src") || "";' +
+'    if(sv2.indexOf("images/") === 0){ meds[j].setAttribute("data-psrc", sv2); meds[j].removeAttribute("src"); }' +
+'  }' +
+'  root.querySelectorAll("[data-psrc]").forEach(reg);' +
+'}' +
+'scanAll(document);' +
+'window.addEventListener("scroll", function(){   /* 双调度:rAF 被节流/标签页隐藏时不发帧,setTimeout 兜底;poke 幂等 */' +
+'  if(window.requestAnimationFrame){ requestAnimationFrame(poke); }' +
+'  setTimeout(poke, 90);' +
+'}, {passive: true});' +
+'window.addEventListener("resize", function(){ poke(); }, {passive: true});' +
+'new MutationObserver(function(muts){' +
+'  var added = false;' +
+'  muts.forEach(function(m){' +
+'    if(m.type === "attributes"){' +   /* 后补 src 的图(弹窗加载器先建节点再赋值):节点新增时无 src 拦不到,这里拦属性赋值 */
+'      var a = m.target;' +
+'      if(a && (a.tagName === "IMG" || a.tagName === "VIDEO" || a.tagName === "SOURCE")){' +
+'        var sv = a.getAttribute("src") || "";' +
+'        if(sv.indexOf("images/") === 0){' +
+'          a.setAttribute("data-psrc", sv); a.removeAttribute("src");' +
+'          reg(a); added = true;' +
+'        }' +
+'      }' +
+'      return;' +
+'    }' +
+'    for(var i = 0; i < m.addedNodes.length; i++){' +
+'      var n = m.addedNodes[i];' +
+'      if(n.nodeType !== 1) continue;' +
+'      var tag = n.tagName;' +
+'      if((tag === "IMG" || tag === "VIDEO" || tag === "SOURCE") && (n.getAttribute("src") || "").indexOf("images/") === 0){' +   /* 动态生成的媒体:摘下明文src,改走懒加载;不用正则:壳页字符串字面量会吃掉反斜杠 */
+'        n.setAttribute("data-psrc", n.getAttribute("src")); n.removeAttribute("src");' +
+'      }' +
+'      if(n.hasAttribute && n.hasAttribute("data-psrc")) reg(n);' +
+'      if(n.querySelectorAll) scanAll(n);' +
+'      added = true;' +
+'    }' +
+'  });' +
+'  if(added){ poke(); setTimeout(poke, 350); }' +
+'}).observe(document.documentElement, {childList: true, subtree: true, attributes: true, attributeFilter: ["src"]});' +
+'/* 刷新后回到原浏览位置:滚动位置节流存 sessionStorage;渲染后多次校正跳回(图片占位会改变页高) */' +
+'if("scrollRestoration" in history){ try{ history.scrollRestoration = "manual"; }catch(e){} }' +
+'try{' +
+'  var _sy = +(sessionStorage.getItem("wl-scroll") || 0);' +
+'  var _rk = false;   /* 用户一碰屏幕就停止校正,避免和刚打开后的点标签跳转打架 */' +
+'  ["touchstart","wheel","keydown"].forEach(function(ev){' +
+'    addEventListener(ev, function(){ _rk = true; }, {passive: true, once: true});' +
+'  });' +
+'  if(_sy > 0){' +
+'    var _rs = function(){ if(!_rk) window.scrollTo(0, _sy); };' +
+'    _rs(); setTimeout(_rs, 200); setTimeout(_rs, 700); setTimeout(_rs, 1500);' +
+'  }' +
+'}catch(e){}' +
+'var _sst = null;' +
+'window.addEventListener("scroll", function(){' +
+'  if(_sst) return;' +
+'  _sst = setTimeout(function(){ _sst = null; try{ sessionStorage.setItem("wl-scroll", String(window.scrollY)); }catch(e){} }, 250);' +
+'}, {passive: true});' +
+'poke();' +
+'})();<' + '/scr' + 'ipt>';
+function fetchParts(fresh){
+  return fetch(fresh ? ('i.b?_=' + Date.now()) : 'i.b').then(function(r){   /* 无时间戳:SW 缓存优先秒开+后台拉新;时间戳=强制网络(⟳) */
+    if(!r.ok) throw new Error('http ' + r.status);
+    return r.arrayBuffer();
+  }).then(function(buf){
+    var d = new Uint8Array(buf);
+    if(!(d.length > 31 && d[0] === 87 && d[1] === 76 && d[2] === 49)) throw new Error('fmt');
+    return { salt: d.slice(3, 19), nonce: d.slice(19, 31), ct: d.slice(31) };
+  });
+}
+function deriveKey(salt){
+  return crypto.subtle.importKey('raw', new TextEncoder().encode(PW), 'PBKDF2', false, ['deriveBits'])
+    .then(function(k){
+      return crypto.subtle.deriveBits({name:'PBKDF2', salt:salt, iterations:ITER, hash:'SHA-256'}, k, 256);
+    });
+}
+function openPage(raw, p){
+  return crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['decrypt']).then(function(k){
+    return crypto.subtle.decrypt({name:'AES-GCM', iv:p.nonce}, k, p.ct);
+  }).then(function(pt){
+    return { raw: raw, html: new TextDecoder().decode(pt) };
+  });
+}
+function withTimeout(pr, ms){
+  return Promise.race([pr, new Promise(function(_, rej){ setTimeout(function(){ rej(new Error('timeout')); }, ms); })]);
+}
+function renderPage(res){
+  var html = res.html.split('src="images/').join('data-psrc="images/');
+  if(html.indexOf('</body>') >= 0){ html = html.replace('</body>', LOADER + '</body>'); }
+  window.__PK = res.raw;
+  document.open(); document.write(html); document.close();
+  setTimeout(function(){   /* 个别 webview write 大页可能不渲染:2秒后骨架缺失则强刷一次 */
+    try{
+      if(!document.getElementById('chips')){
+        if(+(sessionStorage.getItem('wl-wf') || 0) < 1){ sessionStorage.setItem('wl-wf', '1'); location.reload(); }
+      } else { sessionStorage.removeItem('wl-wf'); }
+    }catch(_){}
+  }, 2000);
+}
+var bootEl = document.getElementById('boot'), bmsg = document.getElementById('bmsg');
+bootEl.addEventListener('click', function(){ if(bootEl.classList.contains('err')) location.reload(); });
+function loadAndRender(fresh){
+  return withTimeout(fetchParts(fresh), 20000)
+    .then(function(p){ return deriveKey(p.salt).then(function(raw){ return openPage(raw, p); }); })
+    .then(renderPage);
+}
+loadAndRender().catch(function(){   /* 打开:缓存优先,有缓存秒开(SW 后台拉新,下次生效) */
+  bootEl.classList.add('err');
+  bmsg.textContent = '加载失败，请检查网络';
+});
+window.__wlReload = function(){ return loadAndRender(true); };   /* 页内 ⟳ 按钮:强制网络拿最新 */
+</script>
+<script>if('serviceWorker' in navigator){try{addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}catch(_){}}</script>
+</body></html>
