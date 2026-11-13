@@ -1614,7 +1614,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 
 <footer>
   <div>❄️ <b>YOTTA GAMES
-外滑小分队</b> · v0.205 分享版</div>
+外滑小分队</b> · v0.208 分享版</div>
   
 </footer>
 
@@ -2145,7 +2145,7 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
         var d = '';
         try{ d = localStorage.getItem('bar-dots') || ''; }catch(_){}
         chipbar.classList.toggle('dots-mode', d !== 'full');
-        try{ localStorage.setItem('bar-dir', 'v'); }catch(_){}   // 记住展开方向:竖向
+        try{ localStorage.setItem('bar-dir2', 'v'); }catch(_){}   // 记住展开方向:竖向
       }else{
         // 收起:高度/宽度/圆角动画全保留;空窗用"追逐"解决——栏高过渡期间 scrollTop 上限逐帧放开,
         // 每帧顶在当前上限,当前标签贴着收缩中的窗口滑进圆心,全程可见,不出现空帧
@@ -2211,7 +2211,7 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
         var rd = '';
         try{ rd = localStorage.getItem('bar-row-dots') || ''; }catch(_){}
         chipbar.classList.toggle('dots-mode', rd !== 'full');   // 恢复上次的名字/图标子状态;无记录默认图标
-        try{ localStorage.setItem('bar-dir', 'row'); }catch(_){}   // 记住展开方向:横向码头
+        try{ localStorage.setItem('bar-dir2', 'row'); }catch(_){}   // 记住展开方向:横向码头
         requestAnimationFrame(function(){ fitRowW(); recalcChipPos(); });   // 宽度=恰好5个标签,同时按横排重建位置缓存
         setTimeout(fitRowW, 300);                        // 标签宽度过渡结束后校正
         centerRow();
@@ -2223,10 +2223,10 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
       dockShift();                                       // 圆窗对准当前标签(布局已切回竖排)
       saveBar();
     };
-    var openLast = function(){   // 按记住的展开方向打开:横向码头为默认,只有明确记过竖向才竖着开
+    var openLast = function(){   // 按记住的展开方向打开:默认竖向向上展开,只有明确记过横向码头才横开
       var d = '';
-      try{ d = localStorage.getItem('bar-dir') || ''; }catch(_){}
-      if(d === 'v'){ openBar(true); } else { openRow(true); }
+      try{ d = localStorage.getItem('bar-dir2') || ''; }catch(_){}
+      if(d === 'row'){ openRow(true); } else { openBar(true); }
     };
     // 标签栏四角停靠:tr右上(默认)/tl左上/bl左下/br右下;nav-right=右侧,nav-top=顶部(顶部=向下展开)
     var applyCorner = function(corner){
@@ -2248,20 +2248,20 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
            + (document.body.classList.contains('nav-right') ? 'r' : 'l');
     };
     var savedCorner = '';
-    try{ savedCorner = localStorage.getItem('nav-corner') || ''; }catch(_){}
+    try{ savedCorner = localStorage.getItem('nav-corner2') || ''; }catch(_){}
     if(!savedCorner){   // 旧版只记左右:有旧记录才迁移,没记录走新默认(右上角)
       var side = '';
       try{ side = localStorage.getItem('nav-side') || ''; }catch(_){}
       if(side){ savedCorner = side === 'right' ? 'br' : 'bl'; }
     }
-    if(!/^(tl|tr|bl|br)$/.test(savedCorner)){ savedCorner = 'tr'; }
+    if(!/^(tl|tr|bl|br)$/.test(savedCorner)){ savedCorner = 'br'; }
     applyCorner(savedCorner);
     if(sideSwap){   // 隐藏的换边按钮:点击=在当前高度上左右互换(保留兼容)
       sideSwap.addEventListener('click', function(){
         var c = (document.body.classList.contains('nav-top') ? 't' : 'b')
               + (document.body.classList.contains('nav-right') ? 'l' : 'r');
         applyCorner(c);
-        try{ localStorage.setItem('nav-corner', c); }catch(_){}
+        try{ localStorage.setItem('nav-corner2', c); }catch(_){}
       });
     }
     // 桌面端滚轮:在标签栏上滚动只滚页签列表,不带动整页(列表滚到头也不外溢)
@@ -2282,20 +2282,7 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
     var saveRowDots = function(){   // 横向码头的图标/名字子状态单独记忆(与竖向的 bar-dots 互不干扰)
       try{ localStorage.setItem('bar-row-dots', chipbar.classList.contains('dots-mode') ? 'dots' : 'full'); }catch(_){}
     };
-    var savedBar = '';
-    try{ savedBar = localStorage.getItem('bar-state') || ''; }catch(_){}
-    if(savedBar === 'open' || savedBar === 'open-dots'){   // open-dots 为旧版记录,按展开恢复
-      openLast();             // 上次是展开:按记住的方向恢复(竖向/横向码头);收起态/首次访问保持默认圆形
-    }else{
-      // 打开页面2秒后自动展开一次,引导发现标签栏;期间碰过标签栏(已有自己的意图)则不打扰,
-      // 也不写入记忆——下次打开仍默认收起再引导,只有手动展开/收起才改变记忆
-      var hintTimer = setTimeout(function(){
-        hintTimer = 0;
-        if(!chipbar.classList.contains('show')){ openLast(); }   // 引导也沿记住的展开方向
-      }, 2000);
-      chipbar.addEventListener('touchstart', function(){ if(hintTimer){ clearTimeout(hintTimer); hintTimer = 0; } }, {capture: true, passive: true, once: true});
-      chipbar.addEventListener('mousedown', function(){ if(hintTimer){ clearTimeout(hintTimer); hintTimer = 0; } }, {capture: true, once: true});
-    }
+    // 默认收起:不做展开恢复、也不自动引导;点击/手势才展开(方向见 openLast)
     // 标签栏横向滑动:朝标签按钮所在一侧滑=收缩(变圆点),反向=展开
     // 左侧栏:左滑收缩/右滑展开;右侧栏:右滑收缩/左滑展开(滑向按钮=收拢,符合直觉)
     // 手势进行中(touchmove)即触发,不用等抬手;阈值放宽(30px/2倍),展开更容易触发
@@ -2552,7 +2539,7 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
         var relQ = quadrantOf(t.clientX, t.clientY);
         if(!pullFired && movedFromStart(t.clientX, t.clientY) > 50 && relQ !== curCorner()){
           applyCorner(relQ);
-          try{ localStorage.setItem('nav-corner', relQ); }catch(_){}   // 记住手动选择的位置,刷新后保持
+          try{ localStorage.setItem('nav-corner2', relQ); }catch(_){}   // 记住手动选择的位置,刷新后保持
           return;
         }
         // 长按进了拖动模式却原地松手(没拖去任何角):按压不白费,按"按得重的点按"落地——
