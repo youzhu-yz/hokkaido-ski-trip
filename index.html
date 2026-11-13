@@ -1627,7 +1627,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 
 <footer>
   <div>❄️ <b>YOTTA GAMES
-外滑小分队</b> · v0.218 分享版</div>
+外滑小分队</b> · v0.220 分享版</div>
   
 </footer>
 
@@ -1958,12 +1958,10 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
   });
 })();
 
-/* ---------- 行程版本循环按钮(标题栏内):点一下 → 下一版;内容+预览条 滑出→切换→滑入 ---------- */
+/* ---------- 行程版本循环按钮(标题栏内):点一下 → 下一版;内容+预览条 滑出→切换→滑入;
+   按钮级拦截一切事件冒泡——标题栏自己的 click/touch 监听会先于 document 委托收到冒泡,必须就地拦 ---------- */
 (function(){
-  document.addEventListener('click', function(e){
-    var b = e.target.closest ? e.target.closest('.dver-btn') : null;
-    if(!b) return;
-    e.stopPropagation();   // 别触发行卡折叠/详情弹窗
+  function switchVer(b){
     var day = b.closest('.day');
     if(!day || !day.__applyVersion) return;
     var link = null;
@@ -2007,6 +2005,12 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
     setTimeout(function(){   // 动画事件丢失兜底
       if(day.__pendingVer){ go(); day.__pendingVer = false; }
     }, 260);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.dver-btn'), function(btn){
+    ['touchstart', 'touchmove', 'touchend', 'mousedown', 'mouseup', 'click'].forEach(function(ev){
+      btn.addEventListener(ev, function(e){ e.stopPropagation(); });   // 不触发标题栏折叠/卡片弹窗
+    });
+    btn.addEventListener('click', function(){ switchVer(btn); });
   });
 })();
 

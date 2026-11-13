@@ -1,6 +1,6 @@
 // 北海道攻略 Service Worker:导航网络优先(保证拿到新版本),图片等缓存优先(离线可看)
 // 缓存名带版本号,每次构建发布后自动作废旧缓存
-var CACHE = 'hokkaido-v0.218';
+var CACHE = 'hokkaido-v0.220';
 self.addEventListener('install', function(e){ self.skipWaiting(); });
 self.addEventListener('activate', function(e){
   e.waitUntil(caches.keys().then(function(ks){
