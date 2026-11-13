@@ -1626,7 +1626,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 
 <footer>
   <div>❄️ <b>YOTTA GAMES
-外滑小分队</b> · v0.241 分享版</div>
+外滑小分队</b> · v0.242 分享版</div>
   
 </footer>
 
@@ -1872,10 +1872,12 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
         var cur = opts.indexOf(rows[0].textContent.trim());
         var next = (cur + 1) % opts.length;
         applyIdx(gi, next);
-        var fwdmap = (verEntry() && verEntry().fwd) || link.fwd;
-        if(fwdmap){
-          var t = fwdmap[String(next + 1)];
-          if(t) applyIdx(+t[0], +t[1] - 1);
+        if(gi === 0){   // 只有首组(前段)切班才带动目标组/分支;直接点后组不回写
+          var fwdmap = (verEntry() && verEntry().fwd) || link.fwd;
+          if(fwdmap){
+            var t = fwdmap[String(next + 1)];
+            if(t) applyIdx(+t[0], +t[1] - 1);
+          }
         }
         if(gi === 0 && link.show){
           var vis = link.show[String(next + 1)];
