@@ -1024,8 +1024,13 @@ ul.dots li.subwrap.subwrap-bak{display:none}   /* 备选子卡(如中转酒店)�
 /* ---------- 清单(条目双列网格,紧凑行高) ---------- */
 .ckgroup{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
   padding:12px 14px;margin-bottom:12px}
-.ckhead{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:800;margin-bottom:8px}
-.ckprog{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);background:#f1f4f9;
+.ckhead{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:800;margin-bottom:8px;width:100%}
+.ck-t{flex:1;min-width:0}
+.ckprog{margin-left:0;margin-right:0;flex:none;font-size:12px;font-weight:600;color:var(--muted);background:#f1f4f9;
+.ckbar{height:3px;border-radius:2px;background:var(--line);margin-top:8px;overflow:hidden}
+.ckbar i{display:block;height:100%;width:0;border-radius:2px;background:var(--accent);transition:width .3s ease}
+.ckgroup.ck-done .ckbar i{background:var(--ok)}
+.ckgroup.ck-done .ckhead{color:var(--ok)}
   border-radius:999px;padding:2px 10px;font-variant-numeric:tabular-nums}
 .ckitems{display:grid;grid-template-columns:1fr;gap:6px}
 .ckitem{display:flex;align-items:flex-start;gap:8px;padding:6px 9px;border:1px solid var(--line);
@@ -1629,10 +1634,10 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </section>
 <section id="checklist">
   <div class="sec-head"><div class="sec-ico">🧳</div><div class="sec-txt"><h2>行李清单</h2><span class="sec-sub">勾选状态自动存在本机</span></div></div>
-  <div class="ckgroup"><div class="ckhead">🛂 证件与票务<span class="ckprog">0/9</span></div><div class="ckitems"><label class="ckitem"><input type="checkbox"><span>护照</span><em>有效期需 &gt;6 个月</em></label><label class="ckitem"><input type="checkbox"><span>日本签证</span></label><label class="ckitem"><input type="checkbox"><span>机票行程单</span><em>电子版及纸质版</em></label><label class="ckitem"><input type="checkbox"><span>保险保单</span><em>以防万一</em></label><label class="ckitem"><input type="checkbox"><span>现金日元</span></label><label class="ckitem"><input type="checkbox"><span>双币/ JCB 信用卡</span></label><label class="ckitem wide"><input type="checkbox"><span>电子西瓜卡</span><em>手机版 Suica,地铁/巴士/便利店通用,随时充值</em></label><label class="ckitem wide"><input type="checkbox"><span>Visit Japan Web 登记</span><em>到达前填好
+  <div class="ckgroup"><div class="ckhead"><span class="ck-t">🛂 证件与票务</span><span class="ckprog">0/9</span></div><div class="ckitems"><label class="ckitem"><input type="checkbox"><span>护照</span><em>有效期需 &gt;6 个月</em></label><label class="ckitem"><input type="checkbox"><span>日本签证</span></label><label class="ckitem"><input type="checkbox"><span>机票行程单</span><em>电子版及纸质版</em></label><label class="ckitem"><input type="checkbox"><span>保险保单</span><em>以防万一</em></label><label class="ckitem"><input type="checkbox"><span>现金日元</span></label><label class="ckitem"><input type="checkbox"><span>双币/ JCB 信用卡</span></label><label class="ckitem wide"><input type="checkbox"><span>电子西瓜卡</span><em>手机版 Suica,地铁/巴士/便利店通用,随时充值</em></label><label class="ckitem wide"><input type="checkbox"><span>Visit Japan Web 登记</span><em>到达前填好
 入境审查+海关申报</em></label><label class="ckitem"><input type="checkbox"><span>酒店确认单/地址</span></label></div><div class="ckbar"><i></i></div></div>
-<div class="ckgroup"><div class="ckhead">🎿 滑雪装备<span class="ckprog">0/5</span></div><div class="ckitems"><label class="ckitem"><input type="checkbox"><span>滑雪服 + 雪鞋</span></label><label class="ckitem"><input type="checkbox"><span>雪镜 + 手套</span></label><label class="ckitem"><input type="checkbox"><span>护具(护臀/护膝/护腕)</span><em>强烈建议</em></label><label class="ckitem"><input type="checkbox"><span>头盔 + 护脸/脖套</span><em>强烈建议</em></label><label class="ckitem"><input type="checkbox"><span>速干衣裤 + 滑雪袜</span></label></div><div class="ckbar"><i></i></div></div>
-<div class="ckgroup"><div class="ckhead">📦 其他<span class="ckprog">0/4</span></div><div class="ckitems"><label class="ckitem"><input type="checkbox"><span>转换插头/移动电源/充电器</span></label><label class="ckitem"><input type="checkbox"><span>eSIM / 流量卡</span></label><label class="ckitem"><input type="checkbox"><span>感冒药 / 肠胃药</span></label><label class="ckitem"><input type="checkbox"><span>创可贴 / 扭伤喷雾</span></label></div><div class="ckbar"><i></i></div></div>
+<div class="ckgroup"><div class="ckhead"><span class="ck-t">🎿 滑雪装备</span><span class="ckprog">0/5</span></div><div class="ckitems"><label class="ckitem"><input type="checkbox"><span>滑雪服 + 雪鞋</span></label><label class="ckitem"><input type="checkbox"><span>雪镜 + 手套</span></label><label class="ckitem"><input type="checkbox"><span>护具(护臀/护膝/护腕)</span><em>强烈建议</em></label><label class="ckitem"><input type="checkbox"><span>头盔 + 护脸/脖套</span><em>强烈建议</em></label><label class="ckitem"><input type="checkbox"><span>速干衣裤 + 滑雪袜</span></label></div><div class="ckbar"><i></i></div></div>
+<div class="ckgroup"><div class="ckhead"><span class="ck-t">📦 其他</span><span class="ckprog">0/4</span></div><div class="ckitems"><label class="ckitem"><input type="checkbox"><span>转换插头/移动电源/充电器</span></label><label class="ckitem"><input type="checkbox"><span>eSIM / 流量卡</span></label><label class="ckitem"><input type="checkbox"><span>感冒药 / 肠胃药</span></label><label class="ckitem"><input type="checkbox"><span>创可贴 / 扭伤喷雾</span></label></div><div class="ckbar"><i></i></div></div>
 </section>
 <section id="apps">
   <div class="sec-head"><div class="sec-ico">📲</div><div class="sec-txt"><h2>推荐应用</h2></div></div>
@@ -1642,7 +1647,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.251 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.253 分享版</div>
   
 </footer>
 
@@ -1945,6 +1950,43 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
       };
     }
     refresh();
+  });
+})();
+
+/* ---------- 行李清单:勾选状态存 localStorage,计数器与进度条实时更新 ---------- */
+(function(){
+  var KEY = "ck-v1";
+  var saved = {};
+  try{ saved = JSON.parse(localStorage.getItem(KEY) || "{}"); }catch(_){}
+  document.querySelectorAll(".ckgroup").forEach(function(grp, gi){
+    var boxes = Array.from(grp.querySelectorAll("input[type=checkbox]"));
+    var prog = grp.querySelector(".ckprog");
+    var bar = grp.querySelector(".ckbar i");
+    var head = grp.querySelector(".ckhead");
+    var gname = head ? head.textContent.replace(/\d+\/\d+/, "").trim() : ("g" + gi);
+    function update(){
+      var done = boxes.filter(function(b){ return b.checked; }).length;
+      if(prog) prog.textContent = done + "/" + boxes.length;
+      if(bar){
+        var pct = boxes.length ? Math.round(done / boxes.length * 100) : 0;
+        bar.style.width = pct + "%";
+        if(pct === 100) grp.classList.add("ck-done");
+        else grp.classList.remove("ck-done");
+      }
+      // 持久化
+      var st = {};
+      boxes.forEach(function(b, bi){
+        if(b.checked) st[bi] = 1;
+      });
+      saved[gname] = st;
+      try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catch(_){}
+    }
+    boxes.forEach(function(b, bi){
+      var sv = saved[gname];
+      if(sv && sv[bi]) b.checked = true;
+      b.addEventListener("change", update);
+    });
+    update();   // 初始渲染(恢复勾选 + 计数)
   });
 })();
 
