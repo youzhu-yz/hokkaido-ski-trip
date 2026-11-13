@@ -755,8 +755,8 @@ ul.dots li.lab::before{top:50%;transform:translateY(-50%)}  /* 圆点跟随字�
 /* ---------- 默认收起的卡片:只露两行,底部渐变暗示还有内容,箭头点击展开 ---------- */
 /* 行程「班次」切换:点左侧时间格切下一班(⇄ 小标提示可点;联动规格在 .day 的 data-link) */
 /* 每日顶部「线路预览」:节点+连线,交通图标(扁平)骑在线上方(随卡片展开显示) */
-.dprev{display:flex;align-items:flex-start;margin:2px 6px 6px;padding:16px 2px 0;overflow-x:auto;
-  scrollbar-width:none}   /* 手机上不出灰色滚动条;挤不下时靠内部收缩 */
+.dprev{display:flex;align-items:flex-start;width:90%;margin:2px auto 6px;padding:16px 2px 0;overflow-x:auto;
+  scrollbar-width:none}   /* 整体宽度收窄 10%(居中);手机上不出灰色滚动条,挤不下时靠内部收缩 */
 .dprev::-webkit-scrollbar{display:none}
 .dprev .dp-n{flex:none;display:flex;flex-direction:column;align-items:center;gap:5px}
 .dprev .dp-n i{width:9px;height:9px;border-radius:50%;background:var(--accent);
@@ -1614,7 +1614,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 
 <footer>
   <div>❄️ <b>YOTTA GAMES
-外滑小分队</b> · v0.208 分享版</div>
+外滑小分队</b> · v0.209 分享版</div>
   
 </footer>
 
