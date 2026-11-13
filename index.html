@@ -678,19 +678,17 @@ body.nav-top #chipbar{bottom:auto; top:calc(10px + env(safe-area-inset-top))}   
 .fmeta b{color:var(--ink)}
 
 /* ---------- 人员 ---------- */
-.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(min-width:680px){.mgrid{grid-template-columns:repeat(3,1fr)}}
-@media(min-width:920px){.mgrid{grid-template-columns:repeat(4,1fr)}}
+.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}   /* 一行固定 3 个 */
 .mcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
-  padding:13px 14px;display:flex;align-items:center;gap:12px;position:relative}
-/* 头像在左、信息在右,左右两栏水平对齐(垂直居中) */
+  padding:14px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:9px;
+  text-align:center;position:relative}
+/* 头像在上、名字在下,整卡竖排居中 */
 .mcard.tbd{border-style:dashed;box-shadow:none;background:#fbfcfe}
-.mava{width:40px;height:40px;flex:none;border-radius:50%;background:var(--accent-weak);
-  display:flex;align-items:center;justify-content:center;font-size:19px;overflow:hidden}
+.mava{width:46px;height:46px;flex:none;border-radius:50%;background:var(--accent-weak);
+  display:flex;align-items:center;justify-content:center;font-size:21px;overflow:hidden}
 .mava img{width:100%;height:100%;object-fit:cover;display:block}
 .mcard.tbd .mava{background:#f0f2f7;opacity:.6}
-.m-body{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;margin-right:5px}   /* 右侧内容保持居中对齐,并整体内移 5px */
-.mava{margin-left:5px}   /* 头像内移 5px */
+.m-body{display:flex;flex-direction:column;align-items:center}   /* 名字区:头像下方居中 */
 .mname{font-size:12px;font-weight:800}
 .mline{font-size:11px;color:#4a5468;margin-top:3px;word-break:break-all;text-align:center}
 .mline .wx-ico{width:12px;height:12px;vertical-align:-1.5px;margin-right:2px}
@@ -1627,7 +1625,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 
 <footer>
   <div>❄️ <b>YOTTA GAMES
-外滑小分队</b> · v0.224 分享版</div>
+外滑小分队</b> · v0.225 分享版</div>
   
 </footer>
 
