@@ -1549,6 +1549,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 <a href="#resorts"><span class="chip-ico">🏔️</span><span class="chip-txt">雪场</span></a>
 <a href="#gear"><span class="chip-ico">🎿</span><span class="chip-txt">雪具</span></a>
 <a href="#shopping"><span class="chip-ico">🛍️</span><span class="chip-txt">购物</span></a>
+<a href="#fx"><span class="chip-ico">💱</span><span class="chip-txt">汇率</span></a>
 <a href="#food"><span class="chip-ico">🍜</span><span class="chip-txt">吃喝</span></a>
 <a href="#checklist"><span class="chip-ico">🧳</span><span class="chip-txt">清单</span></a>
 <a href="#apps"><span class="chip-ico">📲</span><span class="chip-txt">推荐应用</span></a>
@@ -1664,11 +1665,17 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 <div class="hcard is-clamp is-alt no-dots" data-card="gear|🧳 自带装备(进阶/熟手)"><h3>🧳 自带装备(进阶/熟手)<span class="h-badge"><span class="badge b-tbd">备选</span></span></h3><ul class="dots"><li class="item"><span class="li-main">雪板需托运</span><span class="badge b-todo">待查</span><span class="li-note">东航雪具托运额度与费用待查</span></li><li class="item"><span class="li-main">雪鞋随身或托运</span><span class="li-note">注意总重</span></li><li class="item"><span class="li-main">适合对板子有要求、或长期要滑的人</span></li></ul><button class="clamp-more" type="button" aria-label="展开完整内容"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></div></div>
 </section>
 <section id="shopping">
+  <div class="sec-head"><div class="sec-ico">🛍️</div><div class="sec-txt"><h2>札幌购物</h2><span class="sec-sub">札幌停留期间</span></div></div>
+  <div class="grid g2"><div class="hcard" data-card="shopping|计划目的地"><h3>计划目的地</h3><ul class="dots"><li class="subwrap"><div class="card rcard" data-card="shopping|Sapporo Stellar Place（JR塔）"><a class="r-jump" href="https://maps.app.goo.gl/7p5FeKPoHmxSg6mr7" target="_blank" rel="noopener" aria-label="打开 Sapporo Stellar Place（JR塔） 详情"></a><div class="r-t"><span class="r-link">Sapporo Stellar Place（JR塔）</span></div><div class="r-sub">与 JR 札幌站直连的购物中心
+购物+餐饮,返程去机场前顺路</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|大丸札幌（Daimaru）"><a class="r-jump" href="https://maps.app.goo.gl/TUktNoj1mUVJaFNZA" target="_blank" rel="noopener" aria-label="打开 大丸札幌（Daimaru） 详情"></a><div class="r-t"><span class="r-link">大丸札幌（Daimaru）</span></div><div class="r-sub">札幌站前百货
+地下食品街买伴手礼</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|Sapporo Factory"><a class="r-jump" href="https://maps.app.goo.gl/nui27SP29SHwZ1iBA" target="_blank" rel="noopener" aria-label="打开 Sapporo Factory 详情"></a><div class="r-t"><span class="r-link">Sapporo Factory</span></div><div class="r-sub">旧札幌啤酒厂改造的商场
+营业 10:00–20:00</div><span class="r-go">›</span></div></li></ul></div></div>
+</section>
+<section id="fx">
   <style>
   .fx-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:14px 16px 15px;margin-top:14px}
-  .fx-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:11px}
-  .fx-top b{font-size:14.5px;letter-spacing:.3px}
+    box-shadow:var(--shadow);padding:14px 16px 15px}
+  .fx-top{display:flex;justify-content:flex-end;align-items:center;margin-bottom:11px}
   .fx-meta{flex:none;font-size:10.5px;font-weight:700;color:var(--muted);background:#f1f4f9;
     border-radius:999px;padding:3px 10px;display:inline-flex;align-items:center;gap:5px}
   .fx-meta::before{content:"";width:6px;height:6px;border-radius:50%;background:#b6c0cf}
@@ -1683,7 +1690,6 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
     font-size:21px;font-weight:800;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
   .fx-field input::placeholder{font-size:13px;font-weight:600;color:#b3bcc9}
   .fx-field input:focus{outline:none}
-  .fx-unit{flex:none;font-size:14px;font-weight:800;color:var(--muted)}
   .fx-mid{display:flex;align-items:center;gap:8px;margin:7px 0;color:var(--muted)}
   .fx-mid::before,.fx-mid::after{content:"";flex:1;height:1px;background:var(--line)}
   #fxRate{flex:none;font-size:11.5px;font-weight:700;color:var(--accent-deep);
@@ -1701,14 +1707,9 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
   .dark .fx-quick button{background:#232d3f}
   .dark .fx-mid::before,.dark .fx-mid::after{background:#2b3650}
   </style>
-  <div class="sec-head"><div class="sec-ico">🛍️</div><div class="sec-txt"><h2>札幌购物</h2><span class="sec-sub">札幌停留期间</span></div></div>
-  <div class="grid g2"><div class="hcard" data-card="shopping|计划目的地"><h3>计划目的地</h3><ul class="dots"><li class="subwrap"><div class="card rcard" data-card="shopping|Sapporo Stellar Place（JR塔）"><a class="r-jump" href="https://maps.app.goo.gl/7p5FeKPoHmxSg6mr7" target="_blank" rel="noopener" aria-label="打开 Sapporo Stellar Place（JR塔） 详情"></a><div class="r-t"><span class="r-link">Sapporo Stellar Place（JR塔）</span></div><div class="r-sub">与 JR 札幌站直连的购物中心
-购物+餐饮,返程去机场前顺路</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|大丸札幌（Daimaru）"><a class="r-jump" href="https://maps.app.goo.gl/TUktNoj1mUVJaFNZA" target="_blank" rel="noopener" aria-label="打开 大丸札幌（Daimaru） 详情"></a><div class="r-t"><span class="r-link">大丸札幌（Daimaru）</span></div><div class="r-sub">札幌站前百货
-地下食品街买伴手礼</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|Sapporo Factory"><a class="r-jump" href="https://maps.app.goo.gl/nui27SP29SHwZ1iBA" target="_blank" rel="noopener" aria-label="打开 Sapporo Factory 详情"></a><div class="r-t"><span class="r-link">Sapporo Factory</span></div><div class="r-sub">旧札幌啤酒厂改造的商场
-营业 10:00–20:00</div><span class="r-go">›</span></div></li></ul></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-15 01:47">
+  <div class="sec-head"><div class="sec-ico">💱</div><div class="sec-txt"><h2>汇率换算</h2><span class="sec-sub">日元 ⇄ 人民币</span></div></div>
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-15 01:52">
     <div class="fx-top">
-      <b>汇率换算</b>
       <span class="fx-meta" id="fxMeta">--</span>
     </div>
     <div class="fx-field">
@@ -1746,7 +1747,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.346 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.347 分享版</div>
   
 </footer>
 
