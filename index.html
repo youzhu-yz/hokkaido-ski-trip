@@ -1688,7 +1688,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 购物+餐饮,返程去机场前顺路</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|大丸札幌（Daimaru）"><a class="r-jump" href="https://maps.app.goo.gl/TUktNoj1mUVJaFNZA" target="_blank" rel="noopener" aria-label="打开 大丸札幌（Daimaru） 详情"></a><div class="r-t"><span class="r-link">大丸札幌（Daimaru）</span></div><div class="r-sub">札幌站前百货
 地下食品街买伴手礼</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|Sapporo Factory"><a class="r-jump" href="https://maps.app.goo.gl/nui27SP29SHwZ1iBA" target="_blank" rel="noopener" aria-label="打开 Sapporo Factory 详情"></a><div class="r-t"><span class="r-link">Sapporo Factory</span></div><div class="r-sub">旧札幌啤酒厂改造的商场
 营业 10:00–20:00</div><span class="r-go">›</span></div></li></ul></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 20:58">
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 21:25">
     <div class="fx-top">
       <b>汇率试算</b>
       <span class="fx-meta" id="fxMeta">--</span>
@@ -1728,7 +1728,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.318 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.319 分享版</div>
   
 </footer>
 
@@ -4208,7 +4208,7 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
         if(v > 0.005 && v < 0.2){
           rate = v; paint();
           card.classList.add('fx-live');
-          metaEl.textContent = '实时';
+          metaEl.textContent = '今日汇率';   // 数据源每日更新一次,如实标注,不写"实时"
           if(jEl.value) calcJ(); else if(cEl.value) calcC();
         } else tryApi(i + 1);
       })
