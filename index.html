@@ -788,7 +788,7 @@ ul.dots li.lab::before{top:50%;transform:translateY(-50%)}  /* 圆点跟随字�
   -webkit-tap-highlight-color:transparent}
 .fexp .fexp-body::before{content:"";display:block;border-top:1px dashed var(--line);
   margin-top:6px;order:-1}   /* 展开区顶部虚线:分隔航班信息与交通方案 */
-.fexp .tseg > .trow2:first-child{border-top:none}   /* 按钮下方紧邻的首行不再画虚线(顶部已有一条) */
+.fexp .tseg > .trow2:first-child,.fexp .fexp-body > .trow2:first-of-type{border-top:none}   /* 按钮下方紧邻的首行不再画虚线(顶部已有一条;去程有版本段/返程直挂两种结构) */
 .fexp-btn.fx-label svg{width:13px;height:13px}
 .fxinfo .fexp-body{padding-top:10px}
 .fx-h{font-size:12px;font-weight:800;color:var(--accent-deep);letter-spacing:1px;
@@ -1653,7 +1653,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.293 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.294 分享版</div>
   
 </footer>
 
