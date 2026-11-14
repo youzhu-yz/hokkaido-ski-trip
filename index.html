@@ -1653,7 +1653,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.292 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.293 分享版</div>
   
 </footer>
 
@@ -2117,8 +2117,16 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
   // 初始同步
   window.__syncTransport();
 
-  // 点击交通站牌时间 → 触发行程对应组的切换(逐个 tstop i 绑定,不依赖冒泡)
+  // 点击交通站牌时间 → 触发行程对应组的切换(逐个 tstop i 绑定,不依赖冒泡);
+  // 夜宿(睡觉)行之后的行属次日固定时刻(如返程 D5),不绑定切换、不显示手型
   document.querySelectorAll(".fexp[data-day] .tstop i").forEach(function(stop){
+    var fexp0 = stop.closest(".fexp[data-day]");
+    var row0 = stop.closest(".trow2");
+    var arr = fexp0 ? Array.prototype.slice.call(fexp0.querySelectorAll(".trow2")) : [];
+    var afterNight = arr.slice(0, arr.indexOf(row0)).some(function(r){
+      return r.classList.contains("tnight");
+    });
+    if(afterNight) return;
     stop.style.cursor = "pointer";
     stop.addEventListener("click", function(e){
       e.stopPropagation(); e.preventDefault();
