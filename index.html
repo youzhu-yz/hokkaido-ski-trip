@@ -490,6 +490,9 @@ body.nav-top #chipbar{bottom:auto; top:calc(10px + env(safe-area-inset-top))}   
 .dark .tstop em{background:#1b2333;color:#a8b6ca}
 .tstop i{font-style:normal;font-size:10px;font-weight:700;color:var(--accent-deep);
   font-variant-numeric:tabular-nums;white-space:nowrap}
+.tstop i[style*="cursor"]{text-decoration:underline dotted var(--accent);text-underline-offset:2px}
+.tstop i[style*="cursor"]::after{content:"⇄";font-size:7px;color:var(--accent);opacity:.6;
+  margin-left:1px;vertical-align:super}
 .tsarrow{color:var(--muted);font-size:10px;line-height:1}
 /* 名称行:胶囊左排,行内备注推到行右 */
 .tname{display:flex;align-items:center;flex-wrap:wrap;gap:2px}
@@ -777,7 +780,7 @@ ul.dots li.lab::before{top:50%;transform:translateY(-50%)}  /* 圆点跟随字�
 /* 航班卡「乘机信息」内联折叠区(原详情弹窗内容) + fexp 按钮带文字标签 */
 .fexp-btn.fx-label{width:auto;padding:0 12px;gap:5px;font-size:11px;font-weight:600;
   color:var(--muted);letter-spacing:.5px}
-.fexp .dver-btn{position:absolute;top:8px;right:12px;z-index:5;margin:0}
+.fexp .dver-btn{position:static;display:block;margin:0 auto 8px}
 .fexp-btn.fx-label svg{width:13px;height:13px}
 .fxinfo .fexp-body{padding-top:10px}
 .fx-h{font-size:12px;font-weight:800;color:var(--accent-deep);letter-spacing:1px;
@@ -1643,7 +1646,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.273 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.274 分享版</div>
   
 </footer>
 
