@@ -1662,7 +1662,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.300 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.301 分享版</div>
   
 </footer>
 
@@ -2068,12 +2068,12 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
     if(!dayKw) return;
     var itin = readItinTimes(dayKw);
     if(!itin || !itin._rows) return;
-    var nextDay = false;   // 过了夜宿行(睡觉)之后的行属次日固定时刻(如返程 D5 步行/AIRPORT),不跟本日联动
+    var nextDay = false;   // 过了夜宿行(睡觉)之后的行属次日固定时刻(如返程 D5 步行/AIRPORT):不跟本日行程联动,但时长仍按站牌实际时刻重算
     fexp.querySelectorAll(".trow2").forEach(function(row){
       var seg = row.closest(".tseg");
       if(seg && (seg.hidden || seg.getClientRects().length === 0)) return;   // 未渲染的版本段不同步(初始 class 隐藏/切版本属性隐藏)
-      if(nextDay) return;
-      if(row.classList.contains("tnight")){ nextDay = true; return; }
+      if(row.classList.contains("tnight")) nextDay = true;
+      var skipMatch = nextDay;
       var name = (row.querySelector(".tname") || {}).textContent || "";
       var stops = row.querySelectorAll(".tstop i");
       if(stops.length < 2) return;
@@ -2081,17 +2081,19 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
       var match = null;
       var kws = ["AIRPORT", "函馆本线", "接驳车", "巴士", "步行"];
       var rowKw = null;
-      for(var i = 0; i < kws.length; i++){
-        if(name.indexOf(kws[i]) >= 0){ rowKw = kws[i]; break; }
+      if(!skipMatch){
+        for(var i = 0; i < kws.length; i++){
+          if(name.indexOf(kws[i]) >= 0){ rowKw = kws[i]; break; }
+        }
       }
-      if(!rowKw) return;
-      // 找到行程中包含该关键词的行(取时间)
-      var matches = itin._rows.filter(function(r){ return r.name.indexOf(rowKw) >= 0; });
+      // 找到行程中包含该关键词的行(取时间);次日固定行(跳过匹配)保持空集
+      var matches = (!skipMatch && rowKw)
+        ? itin._rows.filter(function(r){ return r.name.indexOf(rowKw) >= 0; }) : [];
       if(matches.length === 0 && rowKw === "接驳车"){
         matches = itin._rows.filter(function(r){ return r.name.indexOf("Uber") >= 0 || r.name.indexOf("二世谷") >= 0; });
       }
-      // 兜底:关键词全不中时,按出发站名匹配(版本切换后车型可能变了但站名不变)
-      if(matches.length === 0 && stops.length >= 2){
+      // 兜底:关键词全不中时,按出发站名匹配(版本切换后车型可能变了但站名不变);次日固定行不走兜底
+      if(matches.length === 0 && !skipMatch && stops.length >= 2){
         var depSt = (row.querySelectorAll(".tstop b")[0] || {}).textContent || "";
         depSt = depSt.replace(/站$/, "").trim();
         if(depSt){
