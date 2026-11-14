@@ -776,11 +776,15 @@ ul.dots li.lab::before{top:50%;transform:translateY(-50%)}  /* 圆点跟随字�
   background:repeating-linear-gradient(90deg,var(--accent) 0 5px,transparent 5px 11px)}
 .trow2.thint .tname{color:#c79100;font-weight:700}
 .dark .trow2.thint .tname{color:#e2b83f}
-.trow.hide{display:none}   /* 分支线/版本:未选中的行整行隐藏 */
+.trow.hide{display:none}
+.tseg[hidden]{display:none}   /* 交通版本段:未选中的版本隐藏 */   /* 分支线/版本:未选中的行整行隐藏 */
 /* 航班卡「乘机信息」内联折叠区(原详情弹窗内容) + fexp 按钮带文字标签 */
 .fexp-btn.fx-label{width:auto;padding:0 12px;gap:5px;font-size:11px;font-weight:600;
   color:var(--muted);letter-spacing:.5px}
-.fexp .dver-btn{position:static;display:block;margin:0 auto 8px}
+.fexp .dver-btn{position:static;display:block;margin:14px auto 10px;
+  border-top:1px dashed var(--line);padding-top:10px;width:100%;text-align:center;
+  border-radius:0;border:none;background:transparent;color:var(--accent-deep);
+  border-top:1px dashed var(--accent);border-top-color:var(--line)}
 .fexp-btn.fx-label svg{width:13px;height:13px}
 .fxinfo .fexp-body{padding-top:10px}
 .fx-h{font-size:12px;font-weight:800;color:var(--accent-deep);letter-spacing:1px;
@@ -1605,7 +1609,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </section>
 <section id="flights">
   <div class="sec-head"><div class="sec-ico">✈️</div><div class="sec-txt"><h2>航班信息</h2><span class="sec-sub">东航直飞往返</span></div></div>
-  <div class="fcard"><span class="fdir">去程</span><div class="fhead"><div class="fhead2"><span class="fno">MU279</span><span class="fairline">中国东方航空</span></div><span class="fdate">12/11 周五</span></div><div class="froute"><div class="fport"><div class="ftime">08:20</div><div class="fair">上海浦东 T1</div><div class="fcode">PVG</div></div><div class="fmid"><span class="fplane">✈</span><div class="fdur">4 小时 10 分</div></div><div class="fport"><div class="ftime">12:30</div><div class="fair">札幌新千岁</div><div class="fcode">CTS</div></div></div><div class="fmeta"><div>👥 范达尔(33A)、幽助(33C)（占位）</div></div><div class="fexp" data-day="D1"><div class="fexp-wrap"><div class="fexp-body"><div class="trow2"><div class="tico">🚄</div><div class="tmain"><div class="tname"><span class="veh">快速AIRPORT</span> 89号<span class="tnote-inline">1小时14分</span></div><div class="tstops"><div class="tstop"><b>新千岁机场</b><i>13:50</i></div><span class="tsarrow">→</span><div class="tstop"><b>小樽</b><i>15:04</i></div></div></div></div><div class="trow2 thint"><div class="tico">💡</div><div class="tmain"><div class="tname">优先坐前进方向右侧，可看海</div></div><span class="badge b-tbd">提示</span></div><div class="trow2"><div class="tico">🚄</div><div class="tmain"><div class="tname"><span class="veh">函馆本线</span><span class="tnote-inline">1小时9分</span></div><div class="tstops"><div class="tstop"><b>小樽</b><i>18:43</i></div><span class="tsarrow">→</span><div class="tstop"><b>俱知安</b><i>19:52</i></div></div></div></div><div class="trow2"><div class="tico">🚌</div><div class="tmain"><div class="tname"><span class="veh">酒店接驳车</span><span class="tnote-inline">约15分钟</span></div><div class="tstops"><div class="tstop"><b>俱知安</b><i>19:54</i></div><span class="tsarrow">→</span><div class="tstop"><b>穆瓦二世谷</b><i>20:09</i></div></div></div></div></div></div><button class="fexp-btn fx-label" type="button">交通方案<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button></div></div>
+  <div class="fcard"><span class="fdir">去程</span><div class="fhead"><div class="fhead2"><span class="fno">MU279</span><span class="fairline">中国东方航空</span></div><span class="fdate">12/11 周五</span></div><div class="froute"><div class="fport"><div class="ftime">08:20</div><div class="fair">上海浦东 T1</div><div class="fcode">PVG</div></div><div class="fmid"><span class="fplane">✈</span><div class="fdur">4 小时 10 分</div></div><div class="fport"><div class="ftime">12:30</div><div class="fair">札幌新千岁</div><div class="fcode">CTS</div></div></div><div class="fmeta"><div>👥 范达尔(33A)、幽助(33C)（占位）</div></div><div class="fexp" data-day="D1"><div class="fexp-wrap"><div class="fexp-body"><div class="tseg" data-ver="小樽版"><div class="trow2"><div class="tico">🚄</div><div class="tmain"><div class="tname"><span class="veh">快速AIRPORT</span> 89号<span class="tnote-inline">1小时14分</span></div><div class="tstops"><div class="tstop"><b>新千岁机场</b><i>13:50</i></div><span class="tsarrow">→</span><div class="tstop"><b>小樽</b><i>15:04</i></div></div></div></div><div class="trow2"><div class="tico">🚄</div><div class="tmain"><div class="tname"><span class="veh">函馆本线</span><span class="tnote-inline">1小时9分</span></div><div class="tstops"><div class="tstop"><b>小樽</b><i>18:43</i></div><span class="tsarrow">→</span><div class="tstop"><b>俱知安</b><i>19:52</i></div></div></div></div><div class="trow2"><div class="tico">🚌</div><div class="tmain"><div class="tname"><span class="veh">酒店接驳车</span><span class="tnote-inline">约15分钟</span></div><div class="tstops"><div class="tstop"><b>俱知安</b><i>19:54</i></div><span class="tsarrow">→</span><div class="tstop"><b>穆瓦二世谷</b><i>20:09</i></div></div></div></div></div><div class="tseg hidden" data-ver="JR 直达版"><div class="trow2"><div class="tico">🚄</div><div class="tmain"><div class="tname"><span class="veh">快速AIRPORT</span> 89号<span class="tnote-inline">1小时14分</span></div><div class="tstops"><div class="tstop"><b>新千岁机场</b><i>13:50</i></div><span class="tsarrow">→</span><div class="tstop"><b>小樽</b><i>15:04</i></div></div></div></div><div class="trow2"><div class="tico">🚄</div><div class="tmain"><div class="tname"><span class="veh">函馆本线</span><span class="tnote-inline">1小时14分</span></div><div class="tstops"><div class="tstop"><b>小樽</b><i>15:36</i></div><span class="tsarrow">→</span><div class="tstop"><b>俱知安</b><i>16:50</i></div></div></div></div><div class="trow2"><div class="tico">🚌</div><div class="tmain"><div class="tname">/Uber<span class="tnote-inline">约15分钟</span></div><div class="tstops"><div class="tstop"><b>俱知安</b><i>16:52</i></div><span class="tsarrow">→</span><div class="tstop"><b>二世谷公园酒店</b><i></i></div></div></div></div></div><div class="tseg hidden" data-ver="巴士直达版"><div class="trow2"><div class="tico">🚌</div><div class="tmain"><div class="tname"><span class="veh">巴士</span><span class="tnote-inline">约2.5小时</span></div><div class="tstops"><div class="tstop"><b>新千岁机场</b><i>13:30</i></div><span class="tsarrow">→</span><div class="tstop"><b>俱知安站</b><i>16:00</i></div></div></div></div><div class="trow2"><div class="tico">🚌</div><div class="tmain"><div class="tname">/Uber<span class="tnote-inline">约15分钟</span></div><div class="tstops"><div class="tstop"><b>俱知安站</b><i>16:02</i></div><span class="tsarrow">→</span><div class="tstop"><b>二世谷公园酒店</b><i></i></div></div></div></div></div></div></div><button class="fexp-btn fx-label" type="button">交通方案<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button></div></div>
 <div class="fcard"><span class="fdir">返程</span><div class="fhead"><div class="fhead2"><span class="fno">MU280</span><span class="fairline">中国东方航空</span></div><span class="fdate">12/15 周二</span></div><div class="froute"><div class="fport"><div class="ftime">13:30</div><div class="fair">札幌新千岁</div><div class="fcode">CTS</div></div><div class="fmid"><span class="fplane">✈</span><div class="fdur">3 小时 20 分</div></div><div class="fport"><div class="ftime">16:50</div><div class="fair">上海浦东 T1</div><div class="fcode">PVG</div></div></div><div class="fmeta"><div>👥 范达尔(33A)、幽助(33C)（占位）</div></div><div class="fexp" data-day="D4"><div class="fexp-wrap"><div class="fexp-body"><div class="trow2"><div class="tico">🚌</div><div class="tmain"><div class="tname"><span class="veh">巴士</span><span class="tnote-inline">15分钟</span></div><div class="tstops"><div class="tstop"><b>穆瓦二世谷</b><i>13:39</i></div><span class="tsarrow">→</span><div class="tstop"><b>俱知安站</b><i>13:54</i></div></div></div></div><div class="trow2"><div class="tico">🚄</div><div class="tmain"><div class="tname"><span class="veh">函馆本线</span><span class="tnote-inline">1小时17分</span></div><div class="tstops"><div class="tstop"><b>俱知安站</b><i>14:09</i></div><span class="tsarrow">→</span><div class="tstop"><b>小樽站</b><i>15:26</i></div></div></div></div><div class="trow2"><div class="tico">🚄</div><div class="tmain"><div class="tname"><span class="veh">快速AIRPORT</span><span class="tnote-inline">38分</span></div><div class="tstops"><div class="tstop"><b>小樽站</b><i>15:33</i></div><span class="tsarrow">→</span><div class="tstop"><b>札幌站</b><i>16:11</i></div></div></div></div><div class="trow2"><div class="tico">🚶</div><div class="tmain"><div class="tname"><span class="veh">步行</span><span class="tnote-inline">2分钟</span></div><div class="tstops"><div class="tstop"><b>札幌站</b><i>16:13</i></div><span class="tsarrow">→</span><div class="tstop"><b>华盛顿广场酒店</b><i>16:15</i></div></div></div></div><div class="trow2 tnight"><div class="tico">😴</div><div class="tmain"><div class="tname"><span class="veh">睡觉</span></div><div class="tnote">华盛顿广场酒店 · 札幌</div></div></div><div class="trow2"><div class="tico">🚶</div><div class="tmain"><div class="tname"><span class="veh">步行</span><span class="tnote-inline">约15分钟</span></div><div class="tstops"><div class="tstop"><b>华盛顿广场酒店</b><i>10:50</i></div><span class="tsarrow">→</span><div class="tstop"><b>札幌站</b><i>10:55</i></div></div></div></div><div class="trow2"><div class="tico">🚄</div><div class="tmain"><div class="tname"><span class="veh">快速AIRPORT</span><span class="tnote-inline">37分钟</span></div><div class="tstops"><div class="tstop"><b>札幌站</b><i>11:00</i></div><span class="tsarrow">→</span><div class="tstop"><b>新千岁机场</b><i>11:37</i></div></div></div></div></div></div><button class="fexp-btn fx-label" type="button">交通方案<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button></div></div>
 </section>
 <section id="stay">
@@ -1646,7 +1650,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.274 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.276 分享版</div>
   
 </footer>
 
@@ -2137,6 +2141,49 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
   // 拦截行程切班后的刷新,加交通同步
   var origSync = window.__syncTransport;
   // 在每次 refresh 后调用(origSync 已在初始调了;版本切换/时间点击通过 setTimeout 已覆盖)
+})();
+
+/* ---------- 行程↔交通版本双向联动:监听 data-vers 变化,同步交通版本段+按钮+时刻 ---------- */
+(function(){
+  function updateTransportForDay(day){
+    var dayKw = (day.getAttribute("data-card") || "").split("|")[1];
+    if(!dayKw) return;
+    var fexp = document.querySelector('.fexp[data-day="' + dayKw + '"]');
+    if(!fexp) return;
+    var link = null;
+    try{ link = JSON.parse(day.getAttribute("data-link") || "null"); }catch(_){}
+    if(!link || !link.vers) return;
+    var vi = parseInt(day.getAttribute("data-vers") || "0", 10) || 0;
+    var vname = link.vers[String(vi)] ? link.vers[String(vi)].name : "";
+    if(!vname) return;
+    // 显示对应版本的交通段
+    fexp.querySelectorAll(".tseg").forEach(function(seg){
+      seg.hidden = seg.getAttribute("data-ver") !== vname;
+    });
+    // 更新交通版本按钮
+    var btn = fexp.querySelector(".dver-btn");
+    if(btn) btn.textContent = "⇄ " + vname;
+    // 同步时刻
+    if(window.__syncTransport) setTimeout(window.__syncTransport, 100);
+  }
+  // 监听每个有版本的日卡
+  document.querySelectorAll(".day[data-link]").forEach(function(day){
+    var link = null;
+    try{ link = JSON.parse(day.getAttribute("data-link") || "null"); }catch(_){}
+    if(!link || !link.vers) return;
+    var obs = new MutationObserver(function(mutations){
+      mutations.forEach(function(m){
+        if(m.attributeName === "data-vers") updateTransportForDay(day);
+      });
+    });
+    obs.observe(day, { attributes: true, attributeFilter: ["data-vers"] });
+  });
+  // 初始同步一次
+  document.querySelectorAll(".day[data-link]").forEach(function(day){
+    var link = null;
+    try{ link = JSON.parse(day.getAttribute("data-link") || "null"); }catch(_){}
+    if(link && link.vers) updateTransportForDay(day);
+  });
 })();
 
 /* ---------- 行程版本循环按钮(标题栏内):点一下 → 下一版;内容+预览条 滑出→切换→滑入;
