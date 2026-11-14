@@ -1661,7 +1661,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.296 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.297 分享版</div>
   
 </footer>
 
@@ -2142,6 +2142,15 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
               (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm;
           }
         }
+      }
+      // 行内时长按当前实际时刻重算(首站发车 → 末站到达),切班/换版本后不再是表格静态值
+      var dNote = row.querySelector(".tnote-inline");
+      var dA = /^(\d{1,2}):(\d{2})$/.exec(String(stops[0].textContent || "").trim());
+      var dB = /^(\d{1,2}):(\d{2})$/.exec(String(stops[stops.length - 1].textContent || "").trim());
+      if(dNote && dA && dB){
+        var dv2 = ((((+dB[1]) * 60 + (+dB[2])) - ((+dA[1]) * 60 + (+dA[2]))) % 1440 + 1440) % 1440;
+        var dh = Math.floor(dv2 / 60), dm = dv2 % 60;
+        dNote.textContent = dh > 0 ? (dh + '小时' + (dm ? dm + '分' : '')) : (dm + '分钟');
       }
     });
   }
