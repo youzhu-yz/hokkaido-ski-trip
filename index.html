@@ -1642,9 +1642,23 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
   
 </section>
 <section id="gear">
-  <style>#gear .hcard > h3{display:none}   /* 板块标题已是「雪具租赁」,卡内不再重复一行标题(弹层里备选卡标题不受影响) */</style>
+  <style>
+  #gear .hcard > h3{display:none}   /* 板块标题已是「雪具租赁」,卡内不再重复一行标题(弹层里备选卡标题不受影响) */
+  li.gshop{display:block;padding:0}
+  .gshop .gcard{padding:12px 14px}
+  .gshop .g-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .gshop .g-top b{font-size:14px;font-weight:800;color:var(--ink);letter-spacing:.2px}
+  .gshop .g-tag{flex:none;font-size:10.5px;font-weight:700;color:var(--accent-deep);
+    background:var(--accent-weak);border-radius:999px;padding:3px 10px}
+  .gshop .g-info{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:7px}
+  .gshop .g-price{font-size:15.5px;font-weight:800;color:var(--accent-deep);
+    font-variant-numeric:tabular-nums;letter-spacing:.2px}
+  .gshop .g-dist{font-size:11.5px;font-weight:600;color:var(--muted)}
+  .dark .gshop .gcard{background:#1b2333}
+  .dark .gshop .g-top b{color:#e7ecf4}
+  </style>
   <div class="sec-head"><div class="sec-ico">🎿</div><div class="sec-txt"><h2>雪具租赁</h2><span class="sec-sub">现场租赁 · 装备明细见「清单」区</span></div></div>
-  <div class="grid g2"><div class="hcard no-dots" data-card="gear|🎒 现场租赁"><h3>🎒 现场租赁</h3><ul class="dots"><li class="subwrap"><div class="card rcard" data-card="gear|Ski Rental"><div class="r-t">Ski Rental</div><div class="r-fields"><div class="r-field"><span class="rf-lab">价格</span><span class="rf-val">约¥3,000/日</span></div><div class="r-field"><span class="rf-lab">距雪场</span><span class="rf-val">步行5分钟</span></div><div class="r-field"><span class="rf-lab">说明</span><span class="rf-val">性价比高</span></div></div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="gear|Rhythm"><div class="r-t">Rhythm</div><div class="r-fields"><div class="r-field"><span class="rf-lab">价格</span><span class="rf-val">约¥7,500/日</span></div><div class="r-field"><span class="rf-lab">距雪场</span><span class="rf-val">步行7分钟</span></div><div class="r-field"><span class="rf-lab">说明</span><span class="rf-val">口碑好</span></div></div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="gear|Niseko WOW"><div class="r-t">Niseko WOW</div><div class="r-fields"><div class="r-field"><span class="rf-lab">价格</span><span class="rf-val">约¥8,000/日</span></div><div class="r-field"><span class="rf-lab">距雪场</span><span class="rf-val">步行3分钟</span></div><div class="r-field"><span class="rf-lab">说明</span><span class="rf-val">最方便</span></div></div><span class="r-go">›</span></div></li></ul></div>
+  <div class="grid g2"><div class="hcard no-dots" data-card="gear|🎒 现场租赁"><h3>🎒 现场租赁</h3><ul class="dots"><li class="subwrap gshop"><div class="card rcard gcard"><div class="g-top"><b>Ski Rental</b><span class="g-tag">性价比高</span></div><div class="g-info"><span class="g-price">约¥3,000/日</span><span class="g-dist">步行5分钟</span></div></div></li><li class="subwrap gshop"><div class="card rcard gcard"><div class="g-top"><b>Rhythm</b><span class="g-tag">口碑好</span></div><div class="g-info"><span class="g-price">约¥7,500/日</span><span class="g-dist">步行7分钟</span></div></div></li><li class="subwrap gshop"><div class="card rcard gcard"><div class="g-top"><b>Niseko WOW</b><span class="g-tag">最方便</span></div><div class="g-info"><span class="g-price">约¥8,000/日</span><span class="g-dist">步行3分钟</span></div></div></li></ul></div>
 <div class="hcard is-clamp is-alt no-dots" data-card="gear|🧳 自带装备(进阶/熟手)"><h3>🧳 自带装备(进阶/熟手)<span class="h-badge"><span class="badge b-tbd">备选</span></span></h3><ul class="dots"><li class="item"><span class="li-main">雪板需托运</span><span class="badge b-todo">待查</span><span class="li-note">东航雪具托运额度与费用待查</span></li><li class="item"><span class="li-main">雪鞋随身或托运</span><span class="li-note">注意总重</span></li><li class="item"><span class="li-main">适合对板子有要求、或长期要滑的人</span></li></ul><button class="clamp-more" type="button" aria-label="展开完整内容"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></div></div>
 </section>
 <section id="shopping">
@@ -1690,7 +1704,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 购物+餐饮,返程去机场前顺路</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|大丸札幌（Daimaru）"><a class="r-jump" href="https://maps.app.goo.gl/TUktNoj1mUVJaFNZA" target="_blank" rel="noopener" aria-label="打开 大丸札幌（Daimaru） 详情"></a><div class="r-t"><span class="r-link">大丸札幌（Daimaru）</span></div><div class="r-sub">札幌站前百货
 地下食品街买伴手礼</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|Sapporo Factory"><a class="r-jump" href="https://maps.app.goo.gl/nui27SP29SHwZ1iBA" target="_blank" rel="noopener" aria-label="打开 Sapporo Factory 详情"></a><div class="r-t"><span class="r-link">Sapporo Factory</span></div><div class="r-sub">旧札幌啤酒厂改造的商场
 营业 10:00–20:00</div><span class="r-go">›</span></div></li></ul></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-15 00:48">
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-15 00:53">
     <div class="fx-top">
       <b>汇率试算</b>
       <span class="fx-meta" id="fxMeta">--</span>
@@ -1730,7 +1744,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.343 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.344 分享版</div>
   
 </footer>
 
