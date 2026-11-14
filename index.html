@@ -1684,7 +1684,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
   .dark .fx-mid::before,.dark .fx-mid::after{background:#2b3650}
   </style>
   <div class="sec-head"><div class="sec-ico">🛍️</div><div class="sec-txt"><h2>札幌购物</h2><span class="sec-sub">札幌停留期间</span></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 20:51">
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 20:54">
     <div class="fx-top">
       <b>汇率试算</b>
       <span class="fx-meta" id="fxMeta">--</span>
@@ -1728,7 +1728,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.316 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.317 分享版</div>
   
 </footer>
 
@@ -4177,6 +4177,11 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
   }
   jEl.addEventListener('input', calcJ);
   cEl.addEventListener('input', calcC);
+  // 点击/聚焦输入框时全选已有内容,直接输入即整体替换
+  [jEl, cEl].forEach(function(el){
+    el.addEventListener('focus', function(){ el.select(); });
+    el.addEventListener('click', function(){ el.select(); });
+  });
   document.getElementById('fxQuick').addEventListener('click', function(e){
     var b = e.target.closest('button');
     if(!b) return;
