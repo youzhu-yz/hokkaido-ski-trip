@@ -1645,15 +1645,60 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 <div class="hcard is-clamp is-alt no-dots" data-card="gear|🧳 自带装备(进阶/熟手)"><h3>🧳 自带装备(进阶/熟手)<span class="h-badge"><span class="badge b-tbd">备选</span></span></h3><ul class="dots"><li class="item"><span class="li-main">雪板需托运</span><span class="badge b-todo">待查</span><span class="li-note">东航雪具托运额度与费用待查</span></li><li class="item"><span class="li-main">雪鞋随身或托运</span><span class="li-note">注意总重</span></li><li class="item"><span class="li-main">适合对板子有要求、或长期要滑的人</span></li></ul><button class="clamp-more" type="button" aria-label="展开完整内容"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></div></div>
 </section>
 <section id="shopping">
-  <style>#shopping .hcard > h3{display:none}   /* 板块标题已是「札幌购物」,卡内不再重复一行标题 */</style>
+  <style>
+  #shopping .hcard > h3{display:none}   /* 板块标题已是「札幌购物」,卡内不再重复一行标题 */
+  .fx-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:14px 16px 15px;margin-bottom:14px}
+  .fx-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:11px}
+  .fx-top b{font-size:14.5px;letter-spacing:.3px}
+  .fx-meta{flex:none;font-size:10.5px;font-weight:700;color:var(--muted);background:#f1f4f9;
+    border-radius:999px;padding:3px 10px;display:inline-flex;align-items:center;gap:5px}
+  .fx-meta::before{content:"";width:6px;height:6px;border-radius:50%;background:#b6c0cf}
+  .fx-card.fx-live .fx-meta{color:#1e7f4f;background:#e8f6ee}
+  .fx-card.fx-live .fx-meta::before{background:#2fae6e}
+  .fx-field{display:flex;align-items:center;gap:10px;background:#f7f9fc;border:1px solid var(--line);
+    border-radius:12px;padding:11px 14px}
+  .fx-field:focus-within{border-color:var(--accent);background:#fbfcff}
+  .fx-cur{flex:none;width:64px;font-size:12.5px;font-weight:800;color:var(--ink);line-height:1.25}
+  .fx-cur i{display:block;font-style:normal;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.5px}
+  .fx-field input{flex:1;min-width:0;border:none;background:none;padding:0;font-family:inherit;
+    font-size:21px;font-weight:800;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+  .fx-field input::placeholder{font-size:13px;font-weight:600;color:#b3bcc9}
+  .fx-field input:focus{outline:none}
+  .fx-unit{flex:none;font-size:14px;font-weight:800;color:var(--muted)}
+  .fx-mid{display:flex;align-items:center;gap:8px;margin:7px 0;color:var(--muted)}
+  .fx-mid::before,.fx-mid::after{content:"";flex:1;height:1px;background:var(--line)}
+  #fxRate{flex:none;font-size:11.5px;font-weight:700;color:var(--accent-deep);
+    font-variant-numeric:tabular-nums;letter-spacing:.3px}
+  .fx-quick{display:flex;gap:8px;margin-top:11px}
+  .fx-quick button{flex:1;padding:6px 0;border:none;background:#f1f4f9;border-radius:999px;
+    font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit;
+    -webkit-tap-highlight-color:transparent;transition:background .15s ease,color .15s ease}
+  .fx-quick button:active{background:var(--accent-weak);color:var(--accent-deep)}
+  .dark .fx-card{background:#161e2c}
+  .dark .fx-field{background:#141b28;border-color:#25304460}
+  .dark .fx-field:focus-within{background:#182238}
+  .dark .fx-field input{color:#e7ecf4}
+  .dark .fx-meta{background:#232d3f}
+  .dark .fx-quick button{background:#232d3f}
+  .dark .fx-mid::before,.dark .fx-mid::after{background:#2b3650}
+  </style>
   <div class="sec-head"><div class="sec-ico">🛍️</div><div class="sec-txt"><h2>札幌购物</h2><span class="sec-sub">札幌停留期间</span></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 20:13">
-    <div class="fx-head"><b>日元 → 人民币</b><span id="fxRate">--</span></div>
-    <div class="fx-sub" id="fxMeta">--</div>
-    <div class="fx-calc">
-      <label>日元 ¥<input id="fxJpy" type="text" inputmode="decimal" placeholder="输入金额" autocomplete="off"></label>
-      <span class="fx-swap">⇄</span>
-      <label>人民币 ¥<input id="fxCny" type="text" inputmode="decimal" placeholder="自动换算" autocomplete="off"></label>
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 20:36">
+    <div class="fx-top">
+      <b>日元 ⇄ 人民币 试算</b>
+      <span class="fx-meta" id="fxMeta">--</span>
+    </div>
+    <div class="fx-field">
+      <span class="fx-cur">日元<i>JPY</i></span>
+      <input id="fxJpy" type="text" inputmode="decimal" placeholder="输入金额" autocomplete="off">
+      <span class="fx-unit">¥</span>
+    </div>
+    <div class="fx-mid"><span id="fxRate">--</span></div>
+    <div class="fx-field">
+      <span class="fx-cur">人民币<i>CNY</i></span>
+      <input id="fxCny" type="text" inputmode="decimal" placeholder="自动换算" autocomplete="off">
+      <span class="fx-unit">¥</span>
     </div>
     <div class="fx-quick" id="fxQuick">
       <button type="button">1,000</button><button type="button">5,000</button>
@@ -1685,7 +1730,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.313 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.315 分享版</div>
   
 </footer>
 
@@ -4141,8 +4186,8 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
     calcJ();
   });
   paint();
-  metaEl.textContent = (card.getAttribute('data-src') === '实时' ? '生成时汇率 · ' : '内置参考汇率 · ')
-    + (card.getAttribute('data-time') || '');
+  metaEl.textContent = (card.getAttribute('data-src') === '实时' ? '生成时' : '内置参考')
+    + ' · ' + (card.getAttribute('data-time') || '');
   // 在线时依次尝试公开汇率接口,任一成功即刷新;全部失败保持生成时值(离线可用)
   var apis = [
     ['https://open.er-api.com/v6/latest/JPY', function(j){ return j && j.rates && j.rates.CNY; }],
@@ -4160,8 +4205,9 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
         var v = parseFloat(apis[i][1](j));
         if(v > 0.005 && v < 0.2){
           rate = v; paint();
+          card.classList.add('fx-live');
           var d = new Date();
-          metaEl.textContent = '实时汇率 · ' + (d.getHours() < 10 ? '0' : '') + d.getHours() + ':'
+          metaEl.textContent = '实时 · ' + (d.getHours() < 10 ? '0' : '') + d.getHours() + ':'
             + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
           if(jEl.value) calcJ(); else if(cEl.value) calcC();
         } else tryApi(i + 1);
