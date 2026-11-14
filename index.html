@@ -1653,7 +1653,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.290 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.291 分享版</div>
   
 </footer>
 
@@ -2032,15 +2032,18 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
     if(!dayKw) return;
     var itin = readItinTimes(dayKw);
     if(!itin || !itin._rows) return;
+    var nextDay = false;   // 过了夜宿行(睡觉)之后的行属次日固定时刻(如返程 D5 步行/AIRPORT),不跟本日联动
     fexp.querySelectorAll(".trow2").forEach(function(row){
       var seg = row.closest(".tseg");
       if(seg && (seg.hidden || seg.getClientRects().length === 0)) return;   // 未渲染的版本段不同步(初始 class 隐藏/切版本属性隐藏)
+      if(nextDay) return;
+      if(row.classList.contains("tnight")){ nextDay = true; return; }
       var name = (row.querySelector(".tname") || {}).textContent || "";
       var stops = row.querySelectorAll(".tstop i");
       if(stops.length < 2) return;
       // 在行程可见行中找包含相同车辆关键词的行
       var match = null;
-      var kws = ["AIRPORT", "函馆本线", "接驳车", "巴士"];   // 步行不匹配:D5固定时间不跟版本联动
+      var kws = ["AIRPORT", "函馆本线", "接驳车", "巴士", "步行"];
       var rowKw = null;
       for(var i = 0; i < kws.length; i++){
         if(name.indexOf(kws[i]) >= 0){ rowKw = kws[i]; break; }
