@@ -461,7 +461,7 @@ body.nav-top #chipbar{bottom:auto; top:calc(10px + env(safe-area-inset-top))}   
 .wx-refresh.busy{animation:wxspin 1s linear infinite}
 /* 往返卡尾部的分段路线折叠区(交通内容并入,默认收起):pill 小按钮带箭头,放折叠区之后——
    收起时在卡尾,展开后被内容推到底部(同一按钮位置随折叠移动) */
-.fexp{margin-top:4px}
+.fexpposition:relative;{margin-top:4px}
 .fexp-btn{display:flex;align-items:center;justify-content:center;width:40px;height:20px;
   border-radius:999px;border:1px solid var(--line);background:var(--card);margin:4px auto;
   cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}
@@ -543,14 +543,11 @@ body.nav-top #chipbar{bottom:auto; top:calc(10px + env(safe-area-inset-top))}   
 .day{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
   margin-bottom:14px;overflow:hidden}
 .day .d-head{cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 16px;user-select:none;-webkit-tap-highlight-color:transparent}
-.day .d-num{width:38px;height:20px;flex:none;border-radius:5px;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#173257,#1e4a7d);color:#fff;
-  position:relative;overflow:hidden}
-.day .d-num b{font-size:14px;font-weight:800;line-height:1;position:relative;z-index:1}
-.day .d-num span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  font-size:11px;opacity:.30;letter-spacing:.5px;font-weight:900;z-index:0;
-  text-shadow:0 0 2px rgba(255,255,255,.1)}
+.day .d-num{width:40px;height:40px;flex:none;border-radius:var(--radius);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#173257,#1e4a7d);color:#fff}
+.day .d-num b{font-size:15px;font-weight:800;line-height:1.1}
+.day .d-num span{font-size:9px;opacity:.8}
 .day .d-title{flex:1;min-width:0}
 .day .d-title b{font-size:16px}
 .day .d-title .d-sub{display:none}   /* 副标题(抵达·采购/返程等)已按要求隐藏 */
@@ -780,6 +777,7 @@ ul.dots li.lab::before{top:50%;transform:translateY(-50%)}  /* 圆点跟随字�
 /* 航班卡「乘机信息」内联折叠区(原详情弹窗内容) + fexp 按钮带文字标签 */
 .fexp-btn.fx-label{width:auto;padding:0 12px;gap:5px;font-size:11px;font-weight:600;
   color:var(--muted);letter-spacing:.5px}
+.fexp .dver-btn{position:absolute;top:8px;right:12px;z-index:5;margin:0}
 .fexp-btn.fx-label svg{width:13px;height:13px}
 .fxinfo .fexp-body{padding-top:10px}
 .fx-h{font-size:12px;font-weight:800;color:var(--accent-deep);letter-spacing:1px;
@@ -1645,7 +1643,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.272 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.273 分享版</div>
   
 </footer>
 
@@ -2033,8 +2031,17 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
       // 找到行程中包含该关键词的行(取时间)
       var matches = itin._rows.filter(function(r){ return r.name.indexOf(rowKw) >= 0; });
       if(matches.length === 0 && rowKw === "接驳车"){
-        // JR/巴士版用"巴士/Uber"而非"酒店接驳车":退而匹配 Uber 或 二世谷
         matches = itin._rows.filter(function(r){ return r.name.indexOf("Uber") >= 0 || r.name.indexOf("二世谷") >= 0; });
+      }
+      // 兜底:关键词全不中时,按出发站名匹配(版本切换后车型可能变了但站名不变)
+      if(matches.length === 0 && stops.length >= 2){
+        var depSt = (row.querySelectorAll(".tstop b")[0] || {}).textContent || "";
+        depSt = depSt.replace(/站$/, "").trim();
+        if(depSt){
+          matches = itin._rows.filter(function(r){
+            return r.name.indexOf(depSt) >= 0 && (r.name.indexOf("→") >= 0 || r.name.indexOf("→") >= 0);
+          });
+        }
       }
       if(matches.length > 0){
         match = matches[0];
