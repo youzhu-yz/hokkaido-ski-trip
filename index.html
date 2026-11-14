@@ -908,6 +908,9 @@ ul.dots li.subwrap.subwrap-bak{display:none}   /* 备选子卡(如中转酒店)�
   cursor:pointer;font-family:inherit;text-decoration:underline dotted;text-underline-offset:3px;
   -webkit-tap-highlight-color:transparent}
 .bak-entry button:active{color:var(--accent-deep)}
+.hcard.bak-card{display:none}   /* 收进「备选方案」入口的备选整卡不在版面平铺 */
+.cmp-row .hcard{margin:0}   /* 弹层里的备选整卡 */
+.cmp-row .clamp-more{display:none}   /* 弹层里已全展开,不需要折叠箭头 */
 .cmp-row .rcard{margin:0}   /* 弹层里的备选酒店/雪具小卡 */
 .cmp-mask .card-anim{opacity:1;transform:none}   /* 弹层里不走入场动画,防克隆卡透明 */
 .cmp-row li.subwrap{display:block;padding:0}   /* 弹层里解开隐藏规则 */
@@ -1669,7 +1672,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.311 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.312 分享版</div>
   
 </footer>
 
@@ -4053,6 +4056,44 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
     btn.addEventListener('click', function(e){ e.stopPropagation(); openBackup(card, isHotel ? '酒店' : '方案'); });
     entry.appendChild(btn);
     card.appendChild(entry);
+  });
+
+  // 备选整卡收集(雪场/雪具):「备选」状态的整卡从版面收起,主卡左下角加入口,点开弹层整卡查看
+  function openBakCards(main, baks){
+    if(window.__avaTipHide){ window.__avaTipHide(); }
+    var title = main.querySelector('h3');
+    mask.querySelector('#cmpTitle').textContent = (title ? title.innerText.trim() : '') + ' · 备选方案';
+    var body = mask.querySelector('#cmpBody');
+    body.innerHTML = '';
+    baks.forEach(function(bc){
+      var row = document.createElement('div');
+      row.className = 'cmp-row';
+      var c = bc.cloneNode(true);
+      c.classList.remove('card-anim', 'in', 'is-clamp', 'is-alt', 'bak-card', 'card-pop');   // 解除入场/折叠/弱化状态
+      row.appendChild(c);
+      body.appendChild(row);
+    });
+    mask.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    mask.scrollTop = 0;
+  }
+  document.querySelectorAll('#resorts .hcard.is-alt, #gear .hcard.is-alt').forEach(function(card){
+    var main = card.parentElement.querySelector('.hcard:not(.is-alt)');
+    if(!main) return;   // 整区都是备选时保持原样
+    card.classList.add('bak-card');
+    (main.__bakCards = main.__bakCards || []).push(card);
+  });
+  document.querySelectorAll('#resorts .hcard:not(.is-alt), #gear .hcard:not(.is-alt)').forEach(function(main){
+    var baks = main.__bakCards;
+    if(!baks || !baks.length) return;
+    var entry = document.createElement('div');
+    entry.className = 'bak-entry';
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = '备选方案 ×' + baks.length + ' ›';
+    btn.addEventListener('click', function(e){ e.stopPropagation(); openBakCards(main, baks); });
+    entry.appendChild(btn);
+    main.appendChild(entry);
   });
 })();
 
