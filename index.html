@@ -1687,7 +1687,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 购物+餐饮,返程去机场前顺路</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|大丸札幌（Daimaru）"><a class="r-jump" href="https://maps.app.goo.gl/TUktNoj1mUVJaFNZA" target="_blank" rel="noopener" aria-label="打开 大丸札幌（Daimaru） 详情"></a><div class="r-t"><span class="r-link">大丸札幌（Daimaru）</span></div><div class="r-sub">札幌站前百货
 地下食品街买伴手礼</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|Sapporo Factory"><a class="r-jump" href="https://maps.app.goo.gl/nui27SP29SHwZ1iBA" target="_blank" rel="noopener" aria-label="打开 Sapporo Factory 详情"></a><div class="r-t"><span class="r-link">Sapporo Factory</span></div><div class="r-sub">旧札幌啤酒厂改造的商场
 营业 10:00–20:00</div><span class="r-go">›</span></div></li></ul></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 22:25">
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 22:36">
     <div class="fx-top">
       <b>汇率试算</b>
       <span class="fx-meta" id="fxMeta">--</span>
@@ -1727,7 +1727,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.328 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.329 分享版</div>
   
 </footer>
 
@@ -2231,7 +2231,8 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
   window.__syncTransport();
 
   // 点击交通站牌时间 → 触发行程对应组的切换(逐个 tstop i 绑定,不依赖冒泡);
-  // 夜宿(睡觉)行之后的行属次日固定时刻(如返程 D5),不绑定切换、不显示手型
+  // 只有火车类(快速AIRPORT/函馆本线)可点;接驳车/巴士/步行等时刻由行程跟随算出,不可点;
+  // 夜宿(睡觉)行之后的行属次日固定时刻(如返程 D5 步行/AIRPORT),同样不绑定
   document.querySelectorAll(".fexp[data-day] .tstop i").forEach(function(stop){
     var fexp0 = stop.closest(".fexp[data-day]");
     var row0 = stop.closest(".trow2");
@@ -2240,6 +2241,8 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
       return r.classList.contains("tnight");
     });
     if(afterNight) return;
+    var nm0 = (row0.querySelector(".tname") || {}).textContent || "";
+    if(!/(AIRPORT|函馆本线)/.test(nm0)) return;
     stop.style.cursor = "pointer";
     stop.addEventListener("click", function(e){
       e.stopPropagation(); e.preventDefault();
