@@ -781,11 +781,13 @@ ul.dots li.lab::before{top:50%;transform:translateY(-50%)}  /* 圆点跟随字�
 /* 航班卡「乘机信息」内联折叠区(原详情弹窗内容) + fexp 按钮带文字标签 */
 .fexp-btn.fx-label{width:auto;padding:0 12px;gap:5px;font-size:11px;font-weight:600;
   color:var(--muted);letter-spacing:.5px}
-.fexp .dver-btn{position:static;display:inline-block;margin:10px auto 6px;
+.fexp .dver-btn{position:static;display:inline-block;margin:14px auto 8px;
   padding:4px 14px;border-radius:999px;border:1px solid var(--accent);
   background:var(--accent-weak);color:var(--accent-deep);
   font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;
   -webkit-tap-highlight-color:transparent}
+.fexp .fexp-body::before{content:"";display:block;border-top:1px dashed var(--line);
+  margin-top:6px;order:-1}   /* 展开区顶部虚线:分隔航班信息与交通方案 */
 .fexp-btn.fx-label svg{width:13px;height:13px}
 .fxinfo .fexp-body{padding-top:10px}
 .fx-h{font-size:12px;font-weight:800;color:var(--accent-deep);letter-spacing:1px;
@@ -1650,7 +1652,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.280 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.281 分享版</div>
   
 </footer>
 
