@@ -1647,6 +1647,19 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 <section id="shopping">
   <style>#shopping .hcard > h3{display:none}   /* 板块标题已是「札幌购物」,卡内不再重复一行标题 */</style>
   <div class="sec-head"><div class="sec-ico">🛍️</div><div class="sec-txt"><h2>札幌购物</h2><span class="sec-sub">札幌停留期间</span></div></div>
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 20:13">
+    <div class="fx-head"><b>日元 → 人民币</b><span id="fxRate">--</span></div>
+    <div class="fx-sub" id="fxMeta">--</div>
+    <div class="fx-calc">
+      <label>日元 ¥<input id="fxJpy" type="text" inputmode="decimal" placeholder="输入金额" autocomplete="off"></label>
+      <span class="fx-swap">⇄</span>
+      <label>人民币 ¥<input id="fxCny" type="text" inputmode="decimal" placeholder="自动换算" autocomplete="off"></label>
+    </div>
+    <div class="fx-quick" id="fxQuick">
+      <button type="button">1,000</button><button type="button">5,000</button>
+      <button type="button">10,000</button><button type="button">50,000</button>
+    </div>
+  </div>
   <div class="grid g2"><div class="hcard" data-card="shopping|🛍️ 札幌购物"><h3>🛍️ 札幌购物</h3><ul class="dots"><li class="subwrap"><div class="card rcard" data-card="shopping|Sapporo Stellar Place（JR塔）"><a class="r-jump" href="https://maps.app.goo.gl/7p5FeKPoHmxSg6mr7" target="_blank" rel="noopener" aria-label="打开 Sapporo Stellar Place（JR塔） 详情"></a><div class="r-t"><span class="r-link">Sapporo Stellar Place（JR塔）</span></div><div class="r-sub">与 JR 札幌站直连的购物中心
 购物+餐饮,返程去机场前顺路</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|大丸札幌（Daimaru）"><a class="r-jump" href="https://maps.app.goo.gl/TUktNoj1mUVJaFNZA" target="_blank" rel="noopener" aria-label="打开 大丸札幌（Daimaru） 详情"></a><div class="r-t"><span class="r-link">大丸札幌（Daimaru）</span></div><div class="r-sub">札幌站前百货
 地下食品街买伴手礼</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|Sapporo Factory"><a class="r-jump" href="https://maps.app.goo.gl/nui27SP29SHwZ1iBA" target="_blank" rel="noopener" aria-label="打开 Sapporo Factory 详情"></a><div class="r-t"><span class="r-link">Sapporo Factory</span></div><div class="r-sub">旧札幌啤酒厂改造的商场
@@ -1672,7 +1685,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.312 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.313 分享版</div>
   
 </footer>
 
@@ -4095,6 +4108,67 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
     entry.appendChild(btn);
     main.appendChild(entry);
   });
+})();
+
+/* ---------- 购物:日元↔人民币 汇率显示 + 双向试算;生成时内置一次汇率,在线时尝试刷新实时值 ---------- */
+(function(){
+  var card = document.getElementById('fxCard');
+  if(!card) return;
+  var rate = parseFloat(card.getAttribute('data-rate')) || 0.048;
+  var rateEl = document.getElementById('fxRate');
+  var metaEl = document.getElementById('fxMeta');
+  var jEl = document.getElementById('fxJpy');
+  var cEl = document.getElementById('fxCny');
+  function fmt(n){
+    var r = Math.round(n * 100) / 100;
+    return r.toLocaleString('zh-CN', { maximumFractionDigits: 2 });
+  }
+  function paint(){ rateEl.textContent = '1 ¥ = ' + rate.toFixed(4) + ' ¥'; }
+  function calcJ(){
+    var v = parseFloat(String(jEl.value).replace(/,/g, ''));
+    cEl.value = isNaN(v) ? '' : fmt(v * rate);
+  }
+  function calcC(){
+    var v = parseFloat(String(cEl.value).replace(/,/g, ''));
+    jEl.value = isNaN(v) ? '' : fmt(v / rate);
+  }
+  jEl.addEventListener('input', calcJ);
+  cEl.addEventListener('input', calcC);
+  document.getElementById('fxQuick').addEventListener('click', function(e){
+    var b = e.target.closest('button');
+    if(!b) return;
+    jEl.value = b.textContent.replace(/,/g, '');
+    calcJ();
+  });
+  paint();
+  metaEl.textContent = (card.getAttribute('data-src') === '实时' ? '生成时汇率 · ' : '内置参考汇率 · ')
+    + (card.getAttribute('data-time') || '');
+  // 在线时依次尝试公开汇率接口,任一成功即刷新;全部失败保持生成时值(离线可用)
+  var apis = [
+    ['https://open.er-api.com/v6/latest/JPY', function(j){ return j && j.rates && j.rates.CNY; }],
+    ['https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/jpy.json',
+     function(j){ return j && j.jpy && j.jpy.cny; }],
+    ['https://api.frankfurter.app/latest?from=JPY&to=CNY', function(j){ return j && j.rates && j.rates.CNY; }]
+  ];
+  function tryApi(i){
+    if(i >= apis.length) return;
+    var ctl = ('AbortController' in window) ? new AbortController() : null;
+    var timer = ctl ? setTimeout(function(){ ctl.abort(); }, 5000) : null;
+    fetch(apis[i][0], ctl ? { signal: ctl.signal } : {})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        var v = parseFloat(apis[i][1](j));
+        if(v > 0.005 && v < 0.2){
+          rate = v; paint();
+          var d = new Date();
+          metaEl.textContent = '实时汇率 · ' + (d.getHours() < 10 ? '0' : '') + d.getHours() + ':'
+            + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+          if(jEl.value) calcJ(); else if(cEl.value) calcC();
+        } else tryApi(i + 1);
+      })
+      .catch(function(){ tryApi(i + 1); });
+  }
+  tryApi(0);
 })();
 
 /* ---------- 头像悬浮气泡:桌面悬停显示昵称;手机长按约半秒显示,松手后收起 ---------- */
