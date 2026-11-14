@@ -1364,6 +1364,8 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
   display:flex;align-items:center;justify-content:center}
 .zoom-btn:active{background:rgba(31,58,95,.18)}
 .zoom-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:middle;
+  width:24px;height:24px;margin-left:6px}   /* 酒店卡:详情按钮行内跟在酒店名后 */
 .ov-card .zoom-btn{top:6px;right:6px}
 .day .zoom-btn{top:auto;bottom:12px}
 .fcard .fhead{padding-right:0}
@@ -1687,7 +1689,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 购物+餐饮,返程去机场前顺路</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|大丸札幌（Daimaru）"><a class="r-jump" href="https://maps.app.goo.gl/TUktNoj1mUVJaFNZA" target="_blank" rel="noopener" aria-label="打开 大丸札幌（Daimaru） 详情"></a><div class="r-t"><span class="r-link">大丸札幌（Daimaru）</span></div><div class="r-sub">札幌站前百货
 地下食品街买伴手礼</div><span class="r-go">›</span></div></li><li class="subwrap"><div class="card rcard" data-card="shopping|Sapporo Factory"><a class="r-jump" href="https://maps.app.goo.gl/nui27SP29SHwZ1iBA" target="_blank" rel="noopener" aria-label="打开 Sapporo Factory 详情"></a><div class="r-t"><span class="r-link">Sapporo Factory</span></div><div class="r-sub">旧札幌啤酒厂改造的商场
 营业 10:00–20:00</div><span class="r-go">›</span></div></li></ul></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 22:36">
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 22:42">
     <div class="fx-top">
       <b>汇率试算</b>
       <span class="fx-meta" id="fxMeta">--</span>
@@ -1727,7 +1729,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.329 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.330 分享版</div>
   
 </footer>
 
@@ -5087,7 +5089,13 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
     var btn = document.createElement('button'); btn.className = 'zoom-btn'; btn.type = 'button';
     btn.setAttribute('aria-label', '放大查看');
     btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V5a1 1 0 0 1 1-1h4M15 4h4a1 1 0 0 1 1 1v4M20 15v4a1 1 0 0 1-1 1h-4M9 20H5a1 1 0 0 1-1-1v-4"/></svg>';
-    card.appendChild(btn);
+    var h3 = card.querySelector('h3');
+    if(card.closest('#stay') && h3){   // 酒店卡:详情按钮行内跟在酒店名之后,不再浮在卡片角上
+      btn.classList.add('zoom-inline');
+      h3.insertBefore(btn, h3.querySelector('.h-avas') || null);
+    } else {
+      card.appendChild(btn);
+    }
     btn.addEventListener('click', function(e){ e.stopPropagation(); open(card); });
     card.addEventListener('click', function(e){
       if(e.target.closest('a,button,input,label,summary')) return;
