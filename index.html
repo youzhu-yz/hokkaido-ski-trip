@@ -1684,21 +1684,19 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
   .dark .fx-mid::before,.dark .fx-mid::after{background:#2b3650}
   </style>
   <div class="sec-head"><div class="sec-ico">🛍️</div><div class="sec-txt"><h2>札幌购物</h2><span class="sec-sub">札幌停留期间</span></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 20:36">
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-14 20:51">
     <div class="fx-top">
-      <b>日元 ⇄ 人民币 试算</b>
+      <b>汇率试算</b>
       <span class="fx-meta" id="fxMeta">--</span>
     </div>
     <div class="fx-field">
       <span class="fx-cur">日元<i>JPY</i></span>
       <input id="fxJpy" type="text" inputmode="decimal" placeholder="输入金额" autocomplete="off">
-      <span class="fx-unit">¥</span>
     </div>
     <div class="fx-mid"><span id="fxRate">--</span></div>
     <div class="fx-field">
       <span class="fx-cur">人民币<i>CNY</i></span>
       <input id="fxCny" type="text" inputmode="decimal" placeholder="自动换算" autocomplete="off">
-      <span class="fx-unit">¥</span>
     </div>
     <div class="fx-quick" id="fxQuick">
       <button type="button">1,000</button><button type="button">5,000</button>
@@ -1730,7 +1728,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.315 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.316 分享版</div>
   
 </footer>
 
@@ -4168,7 +4166,7 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
     var r = Math.round(n * 100) / 100;
     return r.toLocaleString('zh-CN', { maximumFractionDigits: 2 });
   }
-  function paint(){ rateEl.textContent = '1 ¥ = ' + rate.toFixed(4) + ' ¥'; }
+  function paint(){ rateEl.textContent = '1 人民币 = ' + (1 / rate).toFixed(2) + ' 日元'; }
   function calcJ(){
     var v = parseFloat(String(jEl.value).replace(/,/g, ''));
     cEl.value = isNaN(v) ? '' : fmt(v * rate);
@@ -4186,8 +4184,7 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
     calcJ();
   });
   paint();
-  metaEl.textContent = (card.getAttribute('data-src') === '实时' ? '生成时' : '内置参考')
-    + ' · ' + (card.getAttribute('data-time') || '');
+  metaEl.textContent = (card.getAttribute('data-src') === '实时' ? '生成时参考' : '内置参考');
   // 在线时依次尝试公开汇率接口,任一成功即刷新;全部失败保持生成时值(离线可用)
   var apis = [
     ['https://open.er-api.com/v6/latest/JPY', function(j){ return j && j.rates && j.rates.CNY; }],
@@ -4206,9 +4203,7 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
         if(v > 0.005 && v < 0.2){
           rate = v; paint();
           card.classList.add('fx-live');
-          var d = new Date();
-          metaEl.textContent = '实时 · ' + (d.getHours() < 10 ? '0' : '') + d.getHours() + ':'
-            + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+          metaEl.textContent = '实时';
           if(jEl.value) calcJ(); else if(cEl.value) calcC();
         } else tryApi(i + 1);
       })
