@@ -1713,7 +1713,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
   .dark .fx-mid::before,.dark .fx-mid::after{background:#2b3650}
   </style>
   <div class="sec-head"><div class="sec-ico">💱</div><div class="sec-txt"><h2>汇率换算</h2><span class="sec-sub">日元 ⇄ 人民币</span></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-15 02:00">
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-15 02:09">
     <div class="fx-top">
       <span class="fx-meta" id="fxMeta">--</span>
     </div>
@@ -1747,7 +1747,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.349 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.350 分享版</div>
   
 </footer>
 
@@ -4385,7 +4385,8 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
   });
 })();
 
-/* ---------- 桌面端双列瀑布流(≥920px):板块整块参与,优先左右交替流入较矮列 ---------- */
+/* ---------- 桌面端双列瀑布流(≥920px):板块整块参与,按板块顺序左右交替(奇数序左、偶数序右),
+   保持与单列一致的阅读顺序——不按矮列贪心,顺序优先 ---------- */
 (function(){
   var wrap = document.querySelector('body > .wrap') || (document.getElementById('overview') || {}).parentNode;
   if(!wrap) return;
@@ -4398,9 +4399,8 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
       wrap.classList.add('masonry');
       cols = [document.createElement('div'), document.createElement('div')];
       cols.forEach(function(c){ c.className = 'mcol'; wrap.appendChild(c); });
-      secs.forEach(function(sec){
-        var t = cols[0].getBoundingClientRect().height <= cols[1].getBoundingClientRect().height ? cols[0] : cols[1];
-        t.appendChild(sec);
+      secs.forEach(function(sec, i){
+        cols[i % 2].appendChild(sec);   // 1,3,5…左列;2,4,6…右列:两列并行推进,阅读顺序与板块表一致
       });
     }else if(wrap.classList.contains('masonry')){
       wrap.classList.remove('masonry');
