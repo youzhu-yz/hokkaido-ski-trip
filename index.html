@@ -781,10 +781,11 @@ ul.dots li.lab::before{top:50%;transform:translateY(-50%)}  /* 圆点跟随字�
 /* 航班卡「乘机信息」内联折叠区(原详情弹窗内容) + fexp 按钮带文字标签 */
 .fexp-btn.fx-label{width:auto;padding:0 12px;gap:5px;font-size:11px;font-weight:600;
   color:var(--muted);letter-spacing:.5px}
-.fexp .dver-btn{position:static;display:block;margin:14px auto 10px;
-  border-top:1px dashed var(--line);padding-top:10px;width:100%;text-align:center;
-  border-radius:0;border:none;background:transparent;color:var(--accent-deep);
-  border-top:1px dashed var(--accent);border-top-color:var(--line)}
+.fexp .dver-btn{position:static;display:inline-block;margin:10px auto 6px;
+  padding:4px 14px;border-radius:999px;border:1px solid var(--accent);
+  background:var(--accent-weak);color:var(--accent-deep);
+  font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;
+  -webkit-tap-highlight-color:transparent}
 .fexp-btn.fx-label svg{width:13px;height:13px}
 .fxinfo .fexp-body{padding-top:10px}
 .fx-h{font-size:12px;font-weight:800;color:var(--accent-deep);letter-spacing:1px;
@@ -1650,7 +1651,7 @@ li.fld .li-lab,li.lab .li-lab{font-size:12px;font-weight:700;color:var(--muted);
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.276 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.277 分享版</div>
   
 </footer>
 
@@ -2049,6 +2050,13 @@ if(!location.hash){ try{ window.scrollTo(0, 0); }catch(_){} }
             return r.name.indexOf(depSt) >= 0 && (r.name.indexOf("→") >= 0 || r.name.indexOf("→") >= 0);
           });
         }
+      }
+      // 站名校验:交通行的出发站与行程行的文字要对得上(区分同车型不同段)
+      var depSt = (row.querySelectorAll(".tstop b")[0] || {}).textContent || "";
+      depSt = depSt.replace(/站$/, "").trim().slice(0, 3);
+      if(matches.length > 1 && depSt){
+        var filtered = matches.filter(function(r){ return r.name.indexOf(depSt) >= 0; });
+        if(filtered.length > 0) matches = filtered;
       }
       if(matches.length > 0){
         match = matches[0];
