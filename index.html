@@ -1713,7 +1713,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
   .dark .fx-mid::before,.dark .fx-mid::after{background:#2b3650}
   </style>
   <div class="sec-head"><div class="sec-ico">💱</div><div class="sec-txt"><h2>汇率换算</h2><span class="sec-sub">日元 ⇄ 人民币</span></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-15 02:22">
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-15 02:28">
     <div class="fx-top">
       <span class="fx-meta" id="fxMeta">--</span>
     </div>
@@ -1747,7 +1747,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.352 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.355 分享版</div>
   
 </footer>
 
@@ -4385,10 +4385,9 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
   });
 })();
 
-/* ---------- 桌面端双列瀑布流(≥920px) —— 已停用:双列会把板块顺序打散(左右列交叉阅读),
-   任何宽度都保持单列,顺序与板块表严格一致;如需恢复改 return 为下方原逻辑 ---------- */
+/* ---------- 桌面端双列瀑布流(≥920px):左右交替分列(1,3,5…左;2,4,6…右),
+   两列并行推进,阅读顺序与板块表严格一致 ---------- */
 (function(){
-  return;   // 停用双列瀑布流:顺序优先
   var wrap = document.querySelector('body > .wrap') || (document.getElementById('overview') || {}).parentNode;
   if(!wrap) return;
   var secs = Array.prototype.slice.call(wrap.querySelectorAll(':scope > section'));
