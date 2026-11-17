@@ -1220,6 +1220,10 @@ ul.dots li.fld::before{display:none!important}   /* 屏蔽通用点号,只留标
 .chip.chip-lv1{background:#2f9e5f;color:#fff;border:1px solid #2f9e5f}   /* 雪道等级:实心徽章,与普通淡蓝胶囊拉开差距 */
 .chip.chip-lv2{background:#1f6fd6;color:#fff;border:1px solid #1f6fd6}   /* 中级=实心蓝(普通胶囊是淡蓝底深蓝字) */
 .chip.chip-lv3{background:#2b2f36;color:#fff;border:1px solid #2b2f36}   /* 高级=黑 */
+.chip.lv-map{cursor:pointer;padding-right:17px;position:relative}   /* 可点击看雪道图的等级胶囊:右侧小箭头提示 */
+.chip.lv-map::after{content:"›";position:absolute;right:6px;top:48%;transform:translateY(-50%);
+  font-weight:800;font-size:12px;opacity:.8}
+.chip.lv-map:active{filter:brightness(.88)}
 .dark .chip.chip-lv1{background:#268a53;color:#fff;border-color:#268a53}
 .dark .chip.chip-lv2{background:#2f7de0;color:#fff;border-color:#2f7de0}   /* 深色模式:亮实心蓝,与暗蓝普通胶囊(#1d3450)明显区分 */
 .dark .chip.chip-lv3{background:#0d1117;color:#f2f5f9;border-color:#41495a}
@@ -1619,7 +1623,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 </section>
 <section id="weather">
   <div class="sec-head"><div class="sec-ico">❄️</div><div class="sec-txt"><h2>天气</h2><span class="sec-sub">12月中旬札幌</span></div></div>
-  <div id="wxBox"><div class="wx-card"><div class="wx-main"><div class="wx-left"><div class="wx-num">暂无数据</div><div class="wx-desc">暂无数据</div></div><div class="wx-right"><div class="wx-ico">❄️</div><button class="wx-more" id="wxMore" type="button">未来30天</button></div></div><div class="wx-grid"><div class="wx-item"><span class="wx-ic">💨</span><div><em>风力风量</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🔆</span><div><em>紫外线强度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">💧</span><div><em>相对湿度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🧥</span><div><em>穿衣指数</em><b>暂无数据</b></div></div></div><div class="wx-sun" id="wxSun"><div class="wx-sun-heads"><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 8V2M8.6 4.4L11 2l2.4 2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日出</i></span><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 2v6M8.6 5.6L11 8l2.4-2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日落</i></span></div><div class="wx-sun-track"><span class="wx-sun-fill" id="wxSunFill"></span><span class="wx-sun-moon" id="wxSunMoon">🌙</span></div><div class="wx-sun-times"><b id="wxRiseTime">9:00</b><b id="wxSetTime">16:00</b></div></div><div class="wx-src"><span class="wx-src-l">数据来源·<a href="https://www.qweather.com/" target="_blank" rel="noopener">Qweather 和风天气</a></span><span class="wx-time">11-17 13:06</span><button class="wx-refresh" id="wxRefresh" type="button" aria-label="刷新数据">⟳</button></div></div></div>
+  <div id="wxBox"><div class="wx-card"><div class="wx-main"><div class="wx-left"><div class="wx-num">暂无数据</div><div class="wx-desc">暂无数据</div></div><div class="wx-right"><div class="wx-ico">❄️</div><button class="wx-more" id="wxMore" type="button">未来30天</button></div></div><div class="wx-grid"><div class="wx-item"><span class="wx-ic">💨</span><div><em>风力风量</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🔆</span><div><em>紫外线强度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">💧</span><div><em>相对湿度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🧥</span><div><em>穿衣指数</em><b>暂无数据</b></div></div></div><div class="wx-sun" id="wxSun"><div class="wx-sun-heads"><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 8V2M8.6 4.4L11 2l2.4 2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日出</i></span><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 2v6M8.6 5.6L11 8l2.4-2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日落</i></span></div><div class="wx-sun-track"><span class="wx-sun-fill" id="wxSunFill"></span><span class="wx-sun-moon" id="wxSunMoon">🌙</span></div><div class="wx-sun-times"><b id="wxRiseTime">9:00</b><b id="wxSetTime">16:00</b></div></div><div class="wx-src"><span class="wx-src-l">数据来源·<a href="https://www.qweather.com/" target="_blank" rel="noopener">Qweather 和风天气</a></span><span class="wx-time">11-18 02:35</span><button class="wx-refresh" id="wxRefresh" type="button" aria-label="刷新数据">⟳</button></div></div></div>
 </section>
 <section id="days">
   <div class="sec-head"><div class="sec-ico">🗓️</div><div class="sec-txt"><h2>每日行程</h2><span class="sec-sub">D1 抵达 · D2/D3 滑雪 · D4 返程(时间均为当地)</span></div></div>
@@ -1642,6 +1646,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 <div class="hcard" data-card="stay|🏨 札幌华盛顿广场酒店"><h3>🏨 札幌华盛顿广场酒店<span class="h-avas"><span class="avrow"><img class="mimg" src="images/a/a17432ca0c.jpg" alt="范达尔"><img class="mimg" src="images/a/3545cfca7f.jpg" alt="幽助"><img class="mimg" src="images/a/adbb15c823.jpg" alt="Z&amp;L"></span></span></h3><ul class="dots"><li class="lab"><span class="li-lab">入住时间</span><span class="li-main">12.14,MON-12.15,TUE</span><span class="li-note">15:00后入住，11:00前退房</span></li><li class="lab"><span class="li-lab">入住房型</span><span class="li-main">小间双人床房</span><span class="li-note">房间 X 2  间夜 X 1</span></li><li class="lab"><span class="li-lab">酒店地址</span><span class="li-main"><button class="li-cp" type="button" aria-label="复制" data-copy="1 Chome-3-9 Kita 6 Jonishi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>1 Chome-3-9 Kita 6 Jonishi</span></li></ul></div></div>
 </section>
 <section id="resorts">
+  <script>window.__RESORT_MAPS__={"🏔️ 二世谷 · 比罗夫": ["images/a/49e86bed3d.jpg", "images/a/eec30fcc8f.webp", "images/a/4766fb3205.png"]};</script>   <!-- 雪道图(卡片详情·简介·图片):等级胶囊点击弹窗用 -->
   <div class="sec-head"><div class="sec-ico">🏔️</div><div class="sec-txt"><h2>雪场</h2></div></div>
   <div class="grid g2"><div class="hcard" data-card="resorts|🏔️ 二世谷 · 比罗夫"><h3>🏔️ 二世谷 · 比罗夫<span class="h-badge"><span class="badge b-ok">首选</span></span></h3><div class="h-sub">12/12~12/14 三日连滑</div><ul class="dots"><li class="fld"><span class="fld-lab">机场车程</span><div class="time-stack"><div class="fld-val">约2.5~4时</div><div class="fld-note">新千岁机场出发</div></div></li><li class="fld"><span class="fld-lab">雪票价格</span><div class="time-stack"><div class="tk-grid"><div class="tk"><span>2日券 ¥23,900</span><b></b></div><div class="tk"><span>12点数券 ¥7,500</span><b></b></div></div></div></li><li class="fld"><span class="fld-lab">开放时间</span><div class="time-stack"><div class="chip-row"><span class="chip">日场:08:30–16:30</span><span class="chip">夜场:16:00–19:00</span></div></div></li><li class="fld"><span class="fld-lab">国际化</span><div class="time-stack"><div class="fld-val">高</div><div class="fld-note">英文标识与服务普遍,氛围国际化</div></div></li><li class="fld"><span class="fld-lab">特色</span><div class="time-stack"><div class="fld-val">粉雪+生活便利</div><div class="fld-note">Hirafu 基地,餐饮酒吧与租赁店密集</div></div></li></ul></div>
 <div class="hcard is-clamp is-alt" data-card="resorts|🏔️ 留寿都"><h3>🏔️ 留寿都<span class="h-badge"><span class="badge b-tbd">备选</span></span></h3><ul class="dots"><li class="fld"><span class="fld-lab">机场车程</span><div class="time-stack"><div class="fld-val">约1.5~2时</div><div class="fld-note">新千岁机场直达巴士约90分钟</div></div></li><li class="fld"><span class="fld-lab">雪票参考</span><div class="time-stack"><div class="tk-grid"><div class="tk"><span>上季1日约¥16,000</span><b></b></div></div><div class="fld-note">按日期浮动,以官网为准</div></div></li><li class="fld"><span class="fld-lab">夜滑</span><div class="time-stack"><div class="fld-val">✅部分</div><div class="fld-note">开放范围以当日公告为准</div></div></li><li class="fld"><span class="fld-lab">国际化</span><div class="time-stack"><div class="fld-val">中高</div><div class="fld-note">度假村酒店一体,英文服务可用</div></div></li><li class="fld"><span class="fld-lab">特色</span><div class="time-stack"><div class="fld-val">树道+人少雪好</div><div class="fld-note">树道限定区域开放,适合中高级</div></div></li></ul><button class="clamp-more" type="button" aria-label="展开完整内容"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button></div>
@@ -1760,7 +1765,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
   .dark .fx-mid::before,.dark .fx-mid::after{background:#2b3650}
   </style>
   <div class="sec-head"><div class="sec-ico">💱</div><div class="sec-txt"><h2>汇率换算</h2><span class="sec-sub">日元 ⇄ 人民币</span></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-17 13:06">
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-18 02:35">
     <div class="fx-top">
       <div class="fx-tax">
         <span class="fx-tax-lab">退税税率</span>
@@ -1798,7 +1803,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.396 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.398 分享版</div>
   
 </footer>
 
@@ -1823,7 +1828,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
     <div class="pop-body" id="popBody"></div>
   </div>
 </div>
-<script id="carddata" type="application/json">{"transport|新千岁机场 ⇄ 二世谷比罗夫": {"tabs": [{"name": "🚄 JR线转乘", "blocks": [{"t": "图片", "c": "images/a/d2b3ba8d63.png", "n": ""}, {"t": "文本", "c": "「新千岁机场」乘「快速AIRPORT」到「小樽」\n转乘「函馆本线」到「俱知安」\n再乘「付费公交」到「比罗夫」", "n": ""}, {"t": "链接", "c": "https://maps.app.goo.gl/LSzm29KkUgAKoRk17", "n": "前往查看"}], "subs": [], "cols": 0}, {"name": "🚌 机场巴士", "blocks": [{"t": "图片", "c": "images/a/0c3b74e277.jpg", "n": ""}, {"t": "文本", "c": "缆车票仅在乘坐当天有效", "n": ""}, {"t": "链接", "c": "https://www.access-n.jp/rsv/sel-date.php?k_cd=2025F&f=P101", "n": "去程预定"}, {"t": "链接", "c": "https://www.access-n.jp/rsv/sel-date.php?k_cd=2025F&f=P102", "n": "返程预定"}], "subs": [], "cols": 0}, {"name": "🚗 包车", "blocks": [{"t": "图片", "c": "images/a/19e06f390a.png", "n": ""}, {"t": "链接", "c": "https://maps.app.goo.gl/AaFhLWQG6dg4ZfQL6", "n": "前往查看"}], "subs": [], "cols": 0}]}, "stay|🏨 穆瓦 · 二世谷": {"tabs": [{"name": "酒店照片", "blocks": [{"t": "标题", "c": "比罗夫酒店一览", "n": ""}, {"t": "图片", "c": "images/a/106d484c1c.jpg", "n": ""}, {"t": "标题", "c": "穆瓦二世谷", "n": ""}, {"t": "图片", "c": "images/a/8f6a70ed1d.webp", "n": ""}, {"t": "图片", "c": "images/a/0ce12fa0c2.webp", "n": ""}, {"t": "图片", "c": "images/a/14a5e89ed2.webp", "n": ""}, {"t": "图片", "c": "images/a/78ddc42faa.webp", "n": ""}, {"t": "图片", "c": "images/a/0e7c795710.webp", "n": ""}], "subs": [], "cols": 0}, {"name": "入住凭证", "blocks": [{"t": "提示", "c": "🔒 此内容涉及敏感信息,仅在完整版攻略中提供", "n": ""}], "subs": [], "cols": 0}]}, "stay|🏨 二世谷 · 公园": {"tabs": [{"name": "酒店照片", "blocks": [{"t": "标题", "c": "二世谷​公园酒店", "n": ""}, {"t": "图片", "c": "images/a/6692b4c864.jpg", "n": ""}], "subs": [], "cols": 0}, {"name": "入住凭证", "blocks": [{"t": "图片", "c": "", "n": ""}], "subs": [], "cols": 0}]}, "stay|🏨 札幌华盛顿广场酒店": {"tabs": [{"name": "酒店照片", "blocks": [{"t": "标题", "c": "札幌华盛顿广场酒店", "n": ""}, {"t": "图片", "c": "images/a/ae13911974.jpg", "n": ""}], "subs": [], "cols": 0}, {"name": "入住凭证", "blocks": [{"t": "图片", "c": "", "n": ""}], "subs": [], "cols": 0}]}, "resorts|🏔️ 二世谷 · 比罗夫": {"tabs": [{"name": "简介", "blocks": [{"t": "图片", "c": "images/a/49e86bed3d.jpg", "n": "比罗夫雪道图-1"}, {"t": "图片", "c": "images/a/eec30fcc8f.webp", "n": "比罗夫雪道图-2"}, {"t": "图片", "c": "images/a/4766fb3205.png", "n": "比罗夫雪道图-3"}, {"t": "链接", "c": "https://www.niseko.ne.jp/en/", "n": "Niseko United 官网"}, {"t": "链接", "c": "https://www.jrhokkaido.co.jp/", "n": "JR 北海道"}], "subs": [], "cols": 0}, {"name": "雪票凭证", "blocks": [{"t": "提示", "c": "🔒 此内容涉及敏感信息,仅在完整版攻略中提供", "n": ""}], "subs": [], "cols": 0}]}, "resorts|🏔️ 留寿都": [{"t": "标题", "c": "留寿都度假村(Rusutsu Resort)", "n": ""}, {"t": "文本", "c": "北海道超大规模度假村之一:三座山(West / East / Mt. Isola)共 37 条雪道,最大落差 594 米;树道按规定区域开放。", "n": ""}, {"t": "文本", "c": "雪量与二世谷齐名,滑雪体验口碑常更高;村内餐饮选择少于比罗夫。", "n": ""}, {"t": "链接", "c": "https://rusutsu.com/", "n": "留寿都官网(英文)"}], "resorts|🏔️ 富良野": [{"t": "标题", "c": "富良野滑雪场(Furano Ski Resort)", "n": ""}, {"t": "文本", "c": "王子集团雪场,初中高级道分布均衡;分北峰/富良野两个 Zone,落差约 950 米。", "n": ""}, {"t": "链接", "c": "https://ski-furano.com/", "n": "富良野雪场官网"}, {"t": "链接", "c": "https://www.princehotels.com/ski/furano/", "n": "王子雪场集团页"}]}</script>
+<script id="carddata" type="application/json">{"transport|新千岁机场 ⇄ 二世谷比罗夫": {"tabs": [{"name": "🚄 JR线转乘", "blocks": [{"t": "图片", "c": "images/a/d2b3ba8d63.png", "n": ""}, {"t": "文本", "c": "「新千岁机场」乘「快速AIRPORT」到「小樽」\n转乘「函馆本线」到「俱知安」\n再乘「付费公交」到「比罗夫」", "n": ""}, {"t": "链接", "c": "https://maps.app.goo.gl/LSzm29KkUgAKoRk17", "n": "前往查看"}], "subs": [], "cols": 0}, {"name": "🚌 机场巴士", "blocks": [{"t": "图片", "c": "images/a/0c3b74e277.jpg", "n": ""}, {"t": "文本", "c": "缆车票仅在乘坐当天有效", "n": ""}, {"t": "链接", "c": "https://www.access-n.jp/rsv/sel-date.php?k_cd=2025F&f=P101", "n": "去程预定"}, {"t": "链接", "c": "https://www.access-n.jp/rsv/sel-date.php?k_cd=2025F&f=P102", "n": "返程预定"}], "subs": [], "cols": 0}, {"name": "🚗 包车", "blocks": [{"t": "图片", "c": "images/a/19e06f390a.png", "n": ""}, {"t": "链接", "c": "https://maps.app.goo.gl/AaFhLWQG6dg4ZfQL6", "n": "前往查看"}], "subs": [], "cols": 0}]}, "stay|🏨 穆瓦 · 二世谷": {"tabs": [{"name": "酒店照片", "blocks": [{"t": "标题", "c": "比罗夫酒店一览", "n": ""}, {"t": "图片", "c": "images/a/106d484c1c.jpg", "n": ""}, {"t": "标题", "c": "穆瓦二世谷", "n": ""}, {"t": "图片", "c": "images/a/8f6a70ed1d.webp", "n": ""}, {"t": "图片", "c": "images/a/0ce12fa0c2.webp", "n": ""}, {"t": "图片", "c": "images/a/14a5e89ed2.webp", "n": ""}, {"t": "图片", "c": "images/a/78ddc42faa.webp", "n": ""}, {"t": "图片", "c": "images/a/0e7c795710.webp", "n": ""}], "subs": [], "cols": 0}, {"name": "入住凭证", "blocks": [{"t": "提示", "c": "🔒 此内容涉及敏感信息,仅在完整版攻略中提供", "n": ""}], "subs": [], "cols": 0}]}, "stay|🏨 二世谷 · 公园": {"tabs": [{"name": "酒店照片", "blocks": [{"t": "标题", "c": "二世谷​公园酒店", "n": ""}, {"t": "图片", "c": "images/a/6692b4c864.jpg", "n": ""}], "subs": [], "cols": 0}, {"name": "入住凭证", "blocks": [{"t": "图片", "c": "", "n": ""}], "subs": [], "cols": 0}]}, "stay|🏨 札幌华盛顿广场酒店": {"tabs": [{"name": "酒店照片", "blocks": [{"t": "标题", "c": "札幌华盛顿广场酒店", "n": ""}, {"t": "图片", "c": "images/a/ae13911974.jpg", "n": ""}], "subs": [], "cols": 0}, {"name": "入住凭证", "blocks": [{"t": "图片", "c": "", "n": ""}], "subs": [], "cols": 0}]}, "resorts|🏔️ 二世谷 · 比罗夫": {"tabs": [{"name": "简介", "blocks": [{"t": "链接", "c": "https://www.niseko.ne.jp/en/", "n": "Niseko United 官网"}, {"t": "链接", "c": "https://www.jrhokkaido.co.jp/", "n": "JR 北海道"}], "subs": [], "cols": 0}, {"name": "雪票凭证", "blocks": [{"t": "提示", "c": "🔒 此内容涉及敏感信息,仅在完整版攻略中提供", "n": ""}], "subs": [], "cols": 0}]}, "resorts|🏔️ 留寿都": [{"t": "标题", "c": "留寿都度假村(Rusutsu Resort)", "n": ""}, {"t": "文本", "c": "北海道超大规模度假村之一:三座山(West / East / Mt. Isola)共 37 条雪道,最大落差 594 米;树道按规定区域开放。", "n": ""}, {"t": "文本", "c": "雪量与二世谷齐名,滑雪体验口碑常更高;村内餐饮选择少于比罗夫。", "n": ""}, {"t": "链接", "c": "https://rusutsu.com/", "n": "留寿都官网(英文)"}], "resorts|🏔️ 富良野": [{"t": "标题", "c": "富良野滑雪场(Furano Ski Resort)", "n": ""}, {"t": "文本", "c": "王子集团雪场,初中高级道分布均衡;分北峰/富良野两个 Zone,落差约 950 米。", "n": ""}, {"t": "链接", "c": "https://ski-furano.com/", "n": "富良野雪场官网"}, {"t": "链接", "c": "https://www.princehotels.com/ski/furano/", "n": "王子雪场集团页"}]}</script>
 
 <!-- ================= 图片全屏查看 ================= -->
 <div class="imgview" id="imgView">
@@ -2713,7 +2718,7 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
     return '周' + WK[d.getDay()] + ' ' + md;
   }
   var cache = null;   // 本次页面周期内的预报数据(⟳ 重建页面后自然重拉)
-  var HL_DATES = { '2026-11-28': 1, '2026-11-29': 1, '2026-11-30': 1 };   // 指定高亮日期(用户标注)
+  var HL_DATES = {};   // 指定高亮日期(用户标注);已按需求清空,需要时填 {'2026-12-25': 1} 这类
   function load(){   // 30d 拉不到(套餐不含)自动退 15d、7d
     var apis = ['/v7/weather/30d', '/v7/weather/15d', '/v7/weather/7d'], i = 0;
     function next(){
@@ -2765,6 +2770,31 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
     body.scrollTop = 0;
   }
   /* 关闭走弹窗自己的 × / 背景点击(卡片详情 IIFE 的 close 兼容清空 body) */
+})();
+
+/* ---------- 雪场「开放雪道」等级胶囊 → 雪道图浮窗:图来自卡片详情·简介·图片(已从详情弹窗移出);
+   复用卡片详情弹窗壳(popMask),图可点击进大图查看器 ---------- */
+(function(){
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest ? e.target.closest('.chip.lv-map') : null;
+    if(!chip) return;
+    var maps = window.__RESORT_MAPS__ || {};
+    var key = chip.getAttribute('data-map') || '';
+    var imgs = maps[key] || [];
+    var mask = document.getElementById('popMask'),
+        title = document.getElementById('popTitle'),
+        body = document.getElementById('popBody');
+    if(!mask || !title || !body || !imgs.length) return;
+    title.textContent = '雪道图 · ' + key.replace(/^🏔️\s*/, '');
+    title.classList.remove('wx7-title');
+    body.innerHTML = imgs.map(function(u){
+      return '<div class="blk" style="margin:0 0 12px"><img src="' + u + '" alt="雪道图" '
+           + 'style="width:100%;display:block;border-radius:12px;cursor:zoom-in"></div>';
+    }).join('');
+    mask.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    body.scrollTop = 0;
+  });
 })();
 
 /* ---------- 导航:点击平滑滚 + 滚动高亮(双列瀑布流下按可视位置判定) ---------- */
