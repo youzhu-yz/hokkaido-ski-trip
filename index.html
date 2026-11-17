@@ -539,6 +539,9 @@ body.nav-top #chipbar{bottom:auto; top:calc(10px + env(safe-area-inset-top))}   
 .wx7-row .tp{font-weight:700;text-align:center;font-variant-numeric:tabular-nums}
 .wx7-row .tp i{font-style:normal;color:var(--muted);font-weight:400}
 .wx7-row .w{color:var(--muted);font-size:11px;text-align:center}
+.wx7-row.hl{background:var(--accent-weak);border-radius:10px;border-top-color:transparent}
+.wx7-row.hl + .wx7-row{border-top-color:transparent}
+.wx7-row.hl .d{color:var(--accent-deep);font-weight:800}   /* 高亮日(如出行日):淡蓝底+日期标蓝加粗 */
 .wx7-tip{padding:26px 10px;text-align:center;color:var(--muted);font-size:12.5px}
 .dark .wx-more:active{background:#232d3e}
 
@@ -1616,7 +1619,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 </section>
 <section id="weather">
   <div class="sec-head"><div class="sec-ico">❄️</div><div class="sec-txt"><h2>天气</h2><span class="sec-sub">12月中旬札幌</span></div></div>
-  <div id="wxBox"><div class="wx-card"><div class="wx-main"><div class="wx-left"><div class="wx-num">暂无数据</div><div class="wx-desc">暂无数据</div></div><div class="wx-right"><div class="wx-ico">❄️</div><button class="wx-more" id="wxMore" type="button">未来30天</button></div></div><div class="wx-grid"><div class="wx-item"><span class="wx-ic">💨</span><div><em>风力风量</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🔆</span><div><em>紫外线强度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">💧</span><div><em>相对湿度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🧥</span><div><em>穿衣指数</em><b>暂无数据</b></div></div></div><div class="wx-sun" id="wxSun"><div class="wx-sun-heads"><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 8V2M8.6 4.4L11 2l2.4 2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日出</i></span><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 2v6M8.6 5.6L11 8l2.4-2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日落</i></span></div><div class="wx-sun-track"><span class="wx-sun-fill" id="wxSunFill"></span><span class="wx-sun-moon" id="wxSunMoon">🌙</span></div><div class="wx-sun-times"><b id="wxRiseTime">9:00</b><b id="wxSetTime">16:00</b></div></div><div class="wx-src"><span class="wx-src-l">数据来源·<a href="https://www.qweather.com/" target="_blank" rel="noopener">Qweather 和风天气</a></span><span class="wx-time">11-17 13:03</span><button class="wx-refresh" id="wxRefresh" type="button" aria-label="刷新数据">⟳</button></div></div></div>
+  <div id="wxBox"><div class="wx-card"><div class="wx-main"><div class="wx-left"><div class="wx-num">暂无数据</div><div class="wx-desc">暂无数据</div></div><div class="wx-right"><div class="wx-ico">❄️</div><button class="wx-more" id="wxMore" type="button">未来30天</button></div></div><div class="wx-grid"><div class="wx-item"><span class="wx-ic">💨</span><div><em>风力风量</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🔆</span><div><em>紫外线强度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">💧</span><div><em>相对湿度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🧥</span><div><em>穿衣指数</em><b>暂无数据</b></div></div></div><div class="wx-sun" id="wxSun"><div class="wx-sun-heads"><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 8V2M8.6 4.4L11 2l2.4 2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日出</i></span><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 2v6M8.6 5.6L11 8l2.4-2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日落</i></span></div><div class="wx-sun-track"><span class="wx-sun-fill" id="wxSunFill"></span><span class="wx-sun-moon" id="wxSunMoon">🌙</span></div><div class="wx-sun-times"><b id="wxRiseTime">9:00</b><b id="wxSetTime">16:00</b></div></div><div class="wx-src"><span class="wx-src-l">数据来源·<a href="https://www.qweather.com/" target="_blank" rel="noopener">Qweather 和风天气</a></span><span class="wx-time">11-17 13:06</span><button class="wx-refresh" id="wxRefresh" type="button" aria-label="刷新数据">⟳</button></div></div></div>
 </section>
 <section id="days">
   <div class="sec-head"><div class="sec-ico">🗓️</div><div class="sec-txt"><h2>每日行程</h2><span class="sec-sub">D1 抵达 · D2/D3 滑雪 · D4 返程(时间均为当地)</span></div></div>
@@ -1757,7 +1760,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
   .dark .fx-mid::before,.dark .fx-mid::after{background:#2b3650}
   </style>
   <div class="sec-head"><div class="sec-ico">💱</div><div class="sec-txt"><h2>汇率换算</h2><span class="sec-sub">日元 ⇄ 人民币</span></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-17 13:03">
+  <div class="fx-card" id="fxCard" data-rate="0.0418" data-src="实时" data-time="11-17 13:06">
     <div class="fx-top">
       <div class="fx-tax">
         <span class="fx-tax-lab">退税税率</span>
@@ -1795,7 +1798,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.395 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.396 分享版</div>
   
 </footer>
 
@@ -2710,6 +2713,7 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
     return '周' + WK[d.getDay()] + ' ' + md;
   }
   var cache = null;   // 本次页面周期内的预报数据(⟳ 重建页面后自然重拉)
+  var HL_DATES = { '2026-11-28': 1, '2026-11-29': 1, '2026-11-30': 1 };   // 指定高亮日期(用户标注)
   function load(){   // 30d 拉不到(套餐不含)自动退 15d、7d
     var apis = ['/v7/weather/30d', '/v7/weather/15d', '/v7/weather/7d'], i = 0;
     function next(){
@@ -2751,7 +2755,7 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
   });
   function render(body, days){
     var rows = days.map(function(d, i){
-      return '<div class="wx7-row"><span class="d">' + dateLabel(d.fxDate, i) + '</span>'
+      return '<div class="wx7-row' + (HL_DATES[d.fxDate] ? ' hl' : '') + '"><span class="d">' + dateLabel(d.fxDate, i) + '</span>'
            + '<span class="i">' + icoOf(d.textDay || '雪') + '</span>'
            + '<span class="tp">' + esc(d.tempMax) + '°<i>/ ' + esc(d.tempMin) + '°</i></span>'
            + '<span class="w">' + esc(d.windDirDay || '') + esc(d.windScaleDay || '') + '级</span></div>';
