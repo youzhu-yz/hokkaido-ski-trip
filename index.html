@@ -872,7 +872,8 @@ ul.dots li.subwrap.half + li.subwrap.half{margin-left:10px}
   font-size:18px;color:#a7b1c2;line-height:1}
 .rcard.has-zoom .r-go{display:none}   /* 有放大按钮时右上是按钮,不再叠 › 箭头 */
 .rcard:not(.has-zoom):not(:has(.r-jump)) .r-go{display:none}   /* 无放大无跳转的小卡不显示箭头 */
-.rcard .r-tag{font-style:normal;font-size:10.5px;font-weight:700;color:#1a9e5c;background:#e7f6ed;
+.rcard .r-tag{display:inline-block;   /* 整体不可拆:放不下时整个换到下一行,不会被劈开跨在两行上 */
+  font-style:normal;font-size:10.5px;font-weight:700;color:#1a9e5c;background:#e7f6ed;
   border-radius:999px;padding:2px 8px;margin-left:8px;vertical-align:1px}
 .rcard .r-tag.cat{color:var(--accent-deep);background:var(--accent-weak)}   /* 品类标签(烤肉/汤咖喱等):蓝色系,区别于绿色「推荐」 */
 .dark .rcard .r-tag.cat{background:#1d3450}
@@ -956,13 +957,20 @@ ul.dots li.subwrap.subwrap-bak{display:none}   /* 备选子卡(如中转酒店)�
 .fmap-pin.on > span,.fmap-pin:hover > span{display:inline;max-width:180px;margin-left:4px}
 .fmap-pin.on i{width:18px;height:18px}
 .fmap-pin:not(.on):not(:hover) i{width:100%;height:100%;font-size:11px}
-.fmap-pin.on{box-shadow:0 4px 14px rgba(16,24,40,.4);z-index:1000}
+.fmap-pin.on{box-shadow:0 4px 14px rgba(16,24,40,.4)}   /* 压在最上层:由脚本设在外层容器上,见 pick() */
 /* 酒店图钉:换样式区别于店铺——方圆角+🏨,橙金色系;不参与店铺序号 */
 .fmap-pin.hotel{border-color:#d98a1a;background:#fff}
 .fmap-pin.hotel i{background:#d98a1a;font-size:13px}
 .fmap-pin.hotel.on{background:#d98a1a;color:#fff}
 .fmap-pin.hotel.on i{background:#fff}
 .fmap-pin.hotel:not(.on):not(:hover){border-radius:9px}
+/* 展开后店名会伸出地图右缘的图钉(.flip,脚本按位置判定):名字改放圆点左侧,圆点位置不动,免得名字被地图边缘裁掉。
+   名字气泡的底色/文字色/边框色都继承圆点,店铺(蓝)与酒店(橙)各自保持配色 */
+.fmap-pin.flip.on,.fmap-pin.flip:hover{width:26px;height:26px;padding:0;border-radius:50%}
+.fmap-pin.flip.on > span,.fmap-pin.flip:hover > span{position:absolute;right:100%;top:50%;transform:translateY(-50%);
+  display:inline;max-width:220px;margin:-2px 0 0;padding:3px 12px 3px 10px;overflow:visible;
+  background:inherit;color:inherit;border:2px solid;border-color:inherit;border-radius:999px;
+  box-shadow:0 4px 14px rgba(16,24,40,.4)}
 .fmap-info{flex:none;padding:10px 14px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line);
   display:none;align-items:center;gap:10px}
 .fmap-info.on{display:flex}
@@ -1697,7 +1705,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 </section>
 <section id="weather">
   <div class="sec-head"><div class="sec-ico">❄️</div><div class="sec-txt"><h2>天气</h2><span class="sec-sub">12月中旬札幌</span></div></div>
-  <div id="wxBox"><div class="wx-card"><div class="wx-main"><div class="wx-left"><div class="wx-num">暂无数据</div><div class="wx-desc">暂无数据</div></div><div class="wx-right"><div class="wx-ico">❄️</div><button class="wx-more" id="wxMore" type="button">未来30天</button></div></div><div class="wx-grid"><div class="wx-item"><span class="wx-ic">💨</span><div><em>风力风量</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🔆</span><div><em>紫外线强度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">💧</span><div><em>相对湿度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🧥</span><div><em>穿衣指数</em><b>暂无数据</b></div></div></div><div class="wx-sun" id="wxSun"><div class="wx-sun-heads"><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 8V2M8.6 4.4L11 2l2.4 2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日出</i></span><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 2v6M8.6 5.6L11 8l2.4-2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日落</i></span></div><div class="wx-sun-track"><span class="wx-sun-fill" id="wxSunFill"></span><span class="wx-sun-moon" id="wxSunMoon">🌙</span></div><div class="wx-sun-times"><b id="wxRiseTime">9:00</b><b id="wxSetTime">16:00</b></div></div><div class="wx-src"><span class="wx-src-l">数据来源·<a href="https://www.qweather.com/" target="_blank" rel="noopener">Qweather 和风天气</a></span><span class="wx-time">11-26 03:03</span><button class="wx-refresh" id="wxRefresh" type="button" aria-label="刷新数据">⟳</button></div></div></div>
+  <div id="wxBox"><div class="wx-card"><div class="wx-main"><div class="wx-left"><div class="wx-num">暂无数据</div><div class="wx-desc">暂无数据</div></div><div class="wx-right"><div class="wx-ico">❄️</div><button class="wx-more" id="wxMore" type="button">未来30天</button></div></div><div class="wx-grid"><div class="wx-item"><span class="wx-ic">💨</span><div><em>风力风量</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🔆</span><div><em>紫外线强度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">💧</span><div><em>相对湿度</em><b>暂无数据</b></div></div><div class="wx-item"><span class="wx-ic">🧥</span><div><em>穿衣指数</em><b>暂无数据</b></div></div></div><div class="wx-sun" id="wxSun"><div class="wx-sun-heads"><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 8V2M8.6 4.4L11 2l2.4 2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日出</i></span><span class="wx-sun-h"><span class="wx-sic"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="13.6" r="4.2" fill="currentColor"/><path d="M3.6 13.6h2.2M16.2 13.6h2.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M11 2v6M8.6 5.6L11 8l2.4-2.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><i>日落</i></span></div><div class="wx-sun-track"><span class="wx-sun-fill" id="wxSunFill"></span><span class="wx-sun-moon" id="wxSunMoon">🌙</span></div><div class="wx-sun-times"><b id="wxRiseTime">9:00</b><b id="wxSetTime">16:00</b></div></div><div class="wx-src"><span class="wx-src-l">数据来源·<a href="https://www.qweather.com/" target="_blank" rel="noopener">Qweather 和风天气</a></span><span class="wx-time">11-26 03:21</span><button class="wx-refresh" id="wxRefresh" type="button" aria-label="刷新数据">⟳</button></div></div></div>
 </section>
 <section id="days">
   <div class="sec-head"><div class="sec-ico">🗓️</div><div class="sec-txt"><h2>每日行程</h2><span class="sec-sub">D1 抵达 · D2/D3 滑雪 · D4 返程(时间均为当地)</span></div></div>
@@ -1862,7 +1870,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
   .dark .fx-mid::before,.dark .fx-mid::after{background:#2b3650}
   </style>
   <div class="sec-head"><div class="sec-ico">💱</div><div class="sec-txt"><h2>汇率换算</h2><span class="sec-sub">日元 ⇄ 人民币</span></div></div>
-  <div class="fx-card" id="fxCard" data-rate="0.0419" data-src="实时" data-time="11-26 03:03">
+  <div class="fx-card" id="fxCard" data-rate="0.0419" data-src="实时" data-time="11-26 03:21">
     <div class="fx-top">
       <div class="fx-tax">
         <span class="fx-tax-lab">退税税率</span>
@@ -1900,7 +1908,7 @@ h3 .zoom-btn.zoom-inline{position:static;display:inline-flex;vertical-align:midd
 </div><!-- /wrap -->
 
 <footer>
-  <div>❄️ <b>外滑小分队</b> · v0.433 分享版</div>
+  <div>❄️ <b>外滑小分队</b> · v0.436 分享版</div>
   
 </footer>
 
@@ -4517,6 +4525,26 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
   function gmapsUrl(s){   // 谷歌地图:有地图链接用链接,否则按坐标定位
     return s.u || ('https://www.google.com/maps/search/?api=1&query=' + s.lat + ',' + s.lng);
   }
+  function applyFlip(){   // 展开后店名会伸出地图右缘的图钉加 .flip(名字改放圆点左侧)
+    var box = document.getElementById('fmapBox');
+    if(!map || !box) return;
+    var right = box.getBoundingClientRect().right;
+    box.querySelectorAll('.fmap-pin').forEach(function(p){
+      if(!p.__nameW){   // 店名宽度:量到有效值才缓存。地图刚定位那一刻布局还没就绪会量到 0,不能当结果存下
+        var probe = document.createElement('span');
+        probe.style.cssText = 'position:absolute;left:0;top:0;width:max-content;visibility:hidden;'
+          + 'white-space:nowrap;font:inherit';   // width:max-content:宽度只由文字决定,不受圆点那个 26px 容器限制
+        probe.textContent = (p.querySelector('span') || {}).textContent || '';
+        p.appendChild(probe);
+        p.__nameW = probe.offsetWidth || Math.round(probe.getBoundingClientRect().width) || 0;
+        probe.remove();
+      }
+      // 向右展开时的右缘 = 圆点左缘 + 圆点宽 26 + 间距 4 + 店名(上限 180) + 右内边距 10
+      var expandedRight = p.getBoundingClientRect().left + 26 + 4 + Math.min(p.__nameW, 180) + 10;
+      p.classList.toggle('flip', expandedRight > right - 4);
+      if(p.classList.contains('on')) p.parentNode.style.zIndex = 1000000;   // 见 pick():选中的提到最上层
+    });
+  }
   function render(){
     var box = document.getElementById('fmapBox');
     var info = document.getElementById('fmapInfo');
@@ -4528,7 +4556,15 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
     var word = mask.__word || '家店';   // 计数量词:吃喝/购物是「家店」,自由行动候选项(神社/大学)是「个地点」
     document.getElementById('fmapCount').textContent = nShop + ' ' + word + (nHotel ? ' + ' + nHotel + ' 家酒店' : '');
     function pick(s){
-      box.querySelectorAll('.fmap-pin').forEach(function(p){ p.classList.toggle('on', p.__s === s); });
+      box.querySelectorAll('.fmap-pin').forEach(function(p){
+        var on = (p.__s === s);
+        p.classList.toggle('on', on);
+        // 选中的名字要压在其他图钉上面。层级只对定位元素有效,而 Leaflet 是在外面另包一层做定位的
+        // (内层 .fmap-pin 不是定位元素,设在它身上的 z-index 不起作用),所以要提到外层容器上去设。
+        // Leaflet 每次重设图钉位置(如缩放后)都会把层级改回默认,所以 applyFlip 在每次移动结束后再提一次。
+        // 取消选中时清空即可:Leaflet 下次重设位置时会补回默认层级
+        p.parentNode.style.zIndex = on ? 1000000 : '';
+      });
       document.getElementById('fiT').textContent = s.n + (s.t ? ' · ' + s.t : '');
       var hi = document.getElementById('fiH');   // 营业时间胶囊(酒店无营业时间则显示「住宿」)
       hi.textContent = s.k === 'hotel' ? '🏨 住宿' : (s.h ? '🕘 营业 ' + s.h : '');
@@ -4550,6 +4586,9 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
           maxZoom: 19, attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
         map.on('tileerror', function(){ tip.classList.add('on'); });
+        // 图钉位置一变就重新判定左右展开:拖动和惯性滑动的过程中(move)就跟着变,
+        // 不能只等移动结束(moveend)——那样滑动期间名字会露在地图外,结束事件晚到时判定还会停在过时状态
+        map.on('move moveend', applyFlip);
       }
       if(layer){ map.removeLayer(layer); layer = null; }
       layer = L.layerGroup().addTo(map);
@@ -4577,7 +4616,9 @@ if('scrollRestoration' in history){ try{ history.scrollRestoration = 'manual'; }
         if(seq !== mask.__renderSeq) return;
         map.invalidateSize();
         map.fitBounds(b.pad(0.25));
+        applyFlip();
       }, 80);
+      applyFlip();
       var want = mask.__pick;   // 默认选中:点小卡进来的那家,否则第一家
       mask.__pick = null;
       pick(curSpots.indexOf(want) >= 0 ? want : curSpots[0]);
